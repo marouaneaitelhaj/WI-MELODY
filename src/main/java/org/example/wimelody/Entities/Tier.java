@@ -1,7 +1,10 @@
 package org.example.wimelody.Entities;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -12,4 +15,8 @@ public class Tier {
     private String description;
     private Double monthlyamount;
     private Double monthlyPoints;
+    @OneToMany(mappedBy = "tier")
+    private List<Pack> packs;
+    @ManyToOne
+    private Artist artist;
 }
