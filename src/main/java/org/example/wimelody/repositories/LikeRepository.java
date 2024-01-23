@@ -1,5 +1,9 @@
 package org.example.wimelody.repositories;
 
-public interface LikeRepository {
+import org.example.wimelody.entities.Artist;
+import org.example.wimelody.entities.Like;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LikeRepository extends JpaRepository<Like, Long> {
     
 }

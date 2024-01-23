@@ -1,5 +1,9 @@
 package org.example.wimelody.repositories;
 
-public interface CommentRepository {
+import org.example.wimelody.entities.Artist;
+import org.example.wimelody.entities.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
     
 }

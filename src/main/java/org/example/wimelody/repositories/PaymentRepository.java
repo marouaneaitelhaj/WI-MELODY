@@ -1,5 +1,9 @@
 package org.example.wimelody.repositories;
 
-public interface PaymentRepository {
+import org.example.wimelody.entities.Artist;
+import org.example.wimelody.entities.Payment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
     
 }

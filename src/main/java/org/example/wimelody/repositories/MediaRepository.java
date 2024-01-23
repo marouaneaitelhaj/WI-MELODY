@@ -1,5 +1,9 @@
 package org.example.wimelody.repositories;
 
-public interface MediaRepository {
+import org.example.wimelody.entities.Artist;
+import org.example.wimelody.entities.Media;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MediaRepository extends JpaRepository<Media, Long> {
     
 }

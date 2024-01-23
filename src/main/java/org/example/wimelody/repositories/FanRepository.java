@@ -1,5 +1,9 @@
 package org.example.wimelody.repositories;
 
-public interface FanRepository {
+import org.example.wimelody.entities.Artist;
+import org.example.wimelody.entities.Fan;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FanRepository extends JpaRepository<Fan, Long> {
     
 }
