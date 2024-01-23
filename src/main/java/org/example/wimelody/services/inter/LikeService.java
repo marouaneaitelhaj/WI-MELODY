@@ -1,2 +1,4 @@
-package org.example.wimelody.Services.Inter;public interface LikeService {
+package org.example.wimelody.services.inter;
+
+public interface LikeService {
 }

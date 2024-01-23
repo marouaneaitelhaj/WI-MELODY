@@ -1,5 +1,4 @@
-package org.example.wimelody.Entities;
-import java.time.LocalDate;
+package org.example.wimelody.entities;
 import java.time.LocalDateTime;
 
 

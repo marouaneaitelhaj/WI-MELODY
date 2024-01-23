@@ -1,11 +1,10 @@
-package org.example.wimelody.Entities;
+package org.example.wimelody.entities;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.wimelody.Entities.Tier;
 
 @Data
 @AllArgsConstructor

@@ -1,9 +1,6 @@
-package org.example.wimelody.Services;
-
-import org.springframework.data.domain.*;
+package org.example.wimelody.services;
 
 import java.util.List;
-import java.util.Map;
 
 public interface BaseService<DTO_RSP, DTO_MINI, F> {
     DTO_RSP save(DTO_MINI dtoMini);

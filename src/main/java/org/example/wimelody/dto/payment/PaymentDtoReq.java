@@ -1,2 +1,4 @@
-package org.example.wimelody.dto.tier;public class PaymentDtoReq {
+package org.example.wimelody.dto.payment;
+
+public class PaymentDtoReq {
 }

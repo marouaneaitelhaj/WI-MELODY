@@ -1,7 +1,5 @@
-package org.example.wimelody.Entities;
+package org.example.wimelody.entities;
 import java.time.LocalDateTime;
-
-import org.springframework.cglib.core.Local;
 
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;

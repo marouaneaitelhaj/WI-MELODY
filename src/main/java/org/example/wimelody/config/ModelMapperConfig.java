@@ -1,4 +1,4 @@
-package org.example.wimelody.Config;
+package org.example.wimelody.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

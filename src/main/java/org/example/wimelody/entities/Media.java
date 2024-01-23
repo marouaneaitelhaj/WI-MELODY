@@ -1,4 +1,4 @@
-package org.example.wimelody.Entities;
+package org.example.wimelody.entities;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;

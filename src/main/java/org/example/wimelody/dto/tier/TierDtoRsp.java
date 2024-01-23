@@ -1,2 +1,4 @@
-package org.example.wimelody.dto.tier;public class TierDtoRsp {
+package org.example.wimelody.dto.tier;
+
+public class TierDtoRsp {
 }

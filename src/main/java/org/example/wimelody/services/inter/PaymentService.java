@@ -1,2 +1,4 @@
-package org.example.wimelody.Services.Inter;public interface PaymentService {
+package org.example.wimelody.services.inter;
+
+public interface PaymentService {
 }

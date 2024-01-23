@@ -1,13 +1,14 @@
-package org.example.wimelody.Controllers;
+package org.example.wimelody.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
-public class AuthController {
-    public ResponseEntity<?> login() {
-        return null;
+@RequestMapping("/api/v1")
+public class TestController {
+    @RequestMapping("/hello")
+    public ResponseEntity<?> heloo() {
+        return ResponseEntity.ok("Hello World");
     }
 }

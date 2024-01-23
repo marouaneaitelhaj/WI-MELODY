@@ -1,2 +1,4 @@
-package org.example.wimelody.dto.payment;public class PaymentDtoRsp {
+package org.example.wimelody.dto.payment;
+
+public class PaymentDtoRsp {
 }

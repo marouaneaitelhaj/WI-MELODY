@@ -1,2 +1,4 @@
-package org.example.wimelody.Services.Impl;public class CommentServiceImpl {
+package org.example.wimelody.services.impl;
+
+public class CommentServiceImpl {
 }

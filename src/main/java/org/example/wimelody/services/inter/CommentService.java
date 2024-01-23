@@ -1,2 +1,4 @@
-package org.example.wimelody.Services.Inter;public interface CommentService {
+package org.example.wimelody.services.inter;
+
+public interface CommentService {
 }

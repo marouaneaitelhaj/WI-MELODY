@@ -1,9 +1,6 @@
-package org.example.wimelody.Entities;
+package org.example.wimelody.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import org.springframework.cglib.core.Local;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
