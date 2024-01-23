@@ -1,4 +1,8 @@
 package org.example.wimelody.services.inter;
 
-public interface CommentService {
+import org.example.wimelody.dto.comment.CommentDtoReq;
+import org.example.wimelody.dto.comment.CommentDtoRsp;
+import org.example.wimelody.services.BaseService;
+
+public interface CommentService extends BaseService<CommentDtoRsp, CommentDtoReq, Long> {
 }

@@ -1,5 +1,9 @@
 package org.example.wimelody.services.inter;
 
-public interface AdminService {
+import org.example.wimelody.dto.admin.AdminDtoReq;
+import org.example.wimelody.dto.admin.AdminDtoRsp;
+import org.example.wimelody.services.BaseService;
+
+public interface AdminService extends BaseService<AdminDtoRsp, AdminDtoReq, Long> {
     
 }
