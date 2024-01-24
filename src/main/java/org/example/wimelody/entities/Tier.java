@@ -17,6 +17,4 @@ public class Tier {
     private Double monthlyPoints;
     @OneToMany(mappedBy = "tier")
     private List<Pack> packs;
-    @ManyToOne
-    private Artist artist;
 }

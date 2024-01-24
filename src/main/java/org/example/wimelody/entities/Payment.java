@@ -13,6 +13,4 @@ public class Payment {
     private LocalDateTime date;
     @ManyToOne
     private Tier tier;
-    @ManyToOne
-    private Fan fan;
 }

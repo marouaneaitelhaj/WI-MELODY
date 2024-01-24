@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class Like {
     private Long id;
     @ManyToOne
-    private Fan fan;
-    @ManyToOne
     private Pack pack;
 }

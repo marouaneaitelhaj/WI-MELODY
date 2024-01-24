@@ -2,7 +2,7 @@ package org.example.wimelody.dto.chat;
 
 import java.time.LocalDateTime;
 
-import org.example.wimelody.entities.Person;
+import org.example.wimelody.entities.User;
 
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ChatDtoReq {
     private Long id;
     private String content;
-    private Person sender;
-    private Person receiver;
+    private User sender;
+    private User receiver;
     private LocalDateTime sentAt;
 }

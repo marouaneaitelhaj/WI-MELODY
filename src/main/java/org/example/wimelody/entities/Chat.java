@@ -13,8 +13,8 @@ public class Chat {
     private Long id;
     private String content;
     @ManyToOne
-    private Person sender;
+    private User sender;
     @ManyToOne
-    private Person receiver;
+    private User receiver;
     private LocalDateTime sentAt;
 }

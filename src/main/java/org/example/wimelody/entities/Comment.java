@@ -14,7 +14,5 @@ public class Comment {
     private String content;
     private LocalDateTime date;
     @ManyToOne
-    private Fan fan;
-    @ManyToOne
     private Pack pack;
 }
