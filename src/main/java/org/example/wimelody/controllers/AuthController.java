@@ -28,6 +28,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserDtoReq userCredential) {
-        return ResponseEntity.ok(userService.save(userCredential));
+        UserDtoRsp userDtoRsp = userService.save(userCredential);
+        userDtoRsp.setToken(userAuthProvider.createToken(userDtoRsp));
+        return ResponseEntity.ok(userDtoRsp);
     }
 }

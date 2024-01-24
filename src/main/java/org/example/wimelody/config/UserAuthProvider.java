@@ -9,6 +9,7 @@ import org.example.wimelody.dto.user.UserCredential;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @Component
 public class UserAuthProvider {
+
     @Value("${jwt.secret-key}")
     private  String secretKey;
 
