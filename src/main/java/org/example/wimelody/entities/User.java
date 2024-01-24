@@ -19,7 +19,7 @@ import lombok.Builder.Default;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "User", uniqueConstraints = {
+@Table(name = "user_app", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
 })

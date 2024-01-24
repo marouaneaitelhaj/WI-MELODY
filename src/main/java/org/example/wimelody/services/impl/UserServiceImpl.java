@@ -30,8 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDtoRsp save(UserDtoReq dtoMini) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        User user = modelMapper.map(dtoMini, User.class);
+        user.setPassword(passwordEncoder.encode(dtoMini.getPassword()));
+        return modelMapper.map(userRepository.save(user), UserDtoRsp.class);
     }
 
     @Override
@@ -59,11 +60,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDtoRsp> Login(UserCredential userCredential) {
-        User user = userRepository.findByUsername(userCredential.getUsername()).orElse(
-                userRepository.findByEmail(userCredential.getEmail()).orElseThrow( () -> new NotFoundExceprion("User not found")));
+    public UserDtoRsp login(UserCredential userCredential) {
+        User user = userRepository.findByEmail(userCredential.getEmail()).orElseThrow(
+                () -> new NotFoundExceprion("User with email " + userCredential.getEmail() + " not found"));
         if (passwordEncoder.matches(userCredential.getPassword(), user.getPassword())) {
-            return Optional.of(modelMapper.map(user, UserDtoRsp.class));
+            return modelMapper.map(user, UserDtoRsp.class);
         } else {
             throw new NotFoundExceprion("Password not match");
         }

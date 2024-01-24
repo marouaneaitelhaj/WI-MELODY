@@ -8,5 +8,5 @@ import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.services.BaseService;
 
 public interface UserService extends BaseService<UserDtoRsp, UserDtoReq, Long> {
-    Optional<UserDtoRsp> Login(UserCredential userCredential);
+    UserDtoRsp login(UserCredential userCredential);
 }

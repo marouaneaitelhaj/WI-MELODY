@@ -19,4 +19,10 @@ public class UserDtoRsp {
     private String fullName;
     
     private String username;
+
+    private String email;
+
+    private String points;
+
+    private String token;
 }

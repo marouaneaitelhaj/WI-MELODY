@@ -1,5 +1,7 @@
 package org.example.wimelody.dto.user;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserCredential {
-
+    @Email
+    @NotNull
     private String email;
-    
-    private String username;
-
+    @NotNull
     private String password;
 }
