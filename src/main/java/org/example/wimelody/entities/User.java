@@ -19,7 +19,7 @@ import lombok.Builder.Default;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "person", uniqueConstraints = {
+@Table(name = "User", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
 })
@@ -42,7 +42,7 @@ public class User {
     @NotBlank
     @Size(max = 120)
     private String password;
-    
+        
 
     private String points;
 
