@@ -1,17 +1,34 @@
 package org.example.wimelody.services.impl;
 
-import java.util.List;
-
+import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.chat.ChatDtoReq;
 import org.example.wimelody.dto.chat.ChatDtoRsp;
+import org.example.wimelody.entities.Chat;
+import org.example.wimelody.entities.User;
+import org.example.wimelody.repositories.ChatRepository;
+import org.example.wimelody.repositories.UserRepository;
 import org.example.wimelody.services.inter.ChatService;
+import org.modelmapper.ModelMapper;
 
+import java.util.List;
+
+@AllArgsConstructor
 public class ChatServiceImpl implements ChatService {
+
+    private final ChatRepository chatRepository;
+
+    private final UserRepository userRepository;
+
+    private final ModelMapper modelMapper;
 
     @Override
     public ChatDtoRsp save(ChatDtoReq dtoMini) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        Chat chat = modelMapper.map(dtoMini, Chat.class);
+        User sender = userRepository.findById(dtoMini.getSender_id()).orElseThrow(() -> new RuntimeException("User not found"));
+        User receiver = userRepository.findById(dtoMini.getReceiver_id()).orElseThrow(() -> new RuntimeException("User not found"));
+        chat.setSender(sender);
+        chat.setReceiver(receiver);
+        return modelMapper.map(chatRepository.save(chat), ChatDtoRsp.class);
     }
 
     @Override

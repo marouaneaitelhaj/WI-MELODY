@@ -2,6 +2,7 @@ package org.example.wimelody.dto.chat;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotNull;
 import org.example.wimelody.entities.User;
 
 import jakarta.persistence.ManyToOne;
@@ -13,8 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatDtoReq {
     private Long id;
+    @NotNull
     private String content;
-    private User sender;
-    private User receiver;
+    @NotNull
+    private Long sender_id;
+    @NotNull
+    private Long receiver_id;
+    @NotNull
     private LocalDateTime sentAt;
 }
