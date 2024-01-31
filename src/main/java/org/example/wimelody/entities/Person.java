@@ -9,37 +9,37 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Inheritance
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-//@Table(name = "user_app", uniqueConstraints = {
-        //@UniqueConstraint(columnNames = "username"),
-        //@UniqueConstraint(columnNames = "email")
-//})
-public class User {
+@Table(name = "user_app", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
-    private String fullName;
+    protected String fullName;
 
     @NotBlank
     @Size(max = 20)
-    private String username;
+    protected String username;
 
     @NotBlank
     @Size(max = 50)
     @Email
-    private String email;
+    protected String email;
 
     @NotBlank
     @Size(max = 120)
-    private String password;
+    protected String password;
         
 
-    private String points;
+    protected String points;
 
     @ManyToOne
-    private Role role;
+    protected Role role;
 }

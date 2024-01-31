@@ -13,13 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Fan extends  User {
-    @OneToMany
+public class Fan extends Person {
+    @OneToMany(mappedBy = "fan")
     private List<Like> likes;
 
-    @OneToMany
+    @OneToMany(mappedBy = "fan")
     private List<Comment> comments;
 
-    @OneToMany
+    @OneToMany(mappedBy = "fan")
     private List<Payment> payments;
 }

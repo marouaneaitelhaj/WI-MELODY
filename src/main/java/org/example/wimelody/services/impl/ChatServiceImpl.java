@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.chat.ChatDtoReq;
 import org.example.wimelody.dto.chat.ChatDtoRsp;
 import org.example.wimelody.entities.Chat;
-import org.example.wimelody.entities.User;
+import org.example.wimelody.entities.Person;
 import org.example.wimelody.repositories.ChatRepository;
 import org.example.wimelody.repositories.UserRepository;
 import org.example.wimelody.services.inter.ChatService;
@@ -24,8 +24,8 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatDtoRsp save(ChatDtoReq dtoMini) {
         Chat chat = modelMapper.map(dtoMini, Chat.class);
-        User sender = userRepository.findById(dtoMini.getSender_id()).orElseThrow(() -> new RuntimeException("User not found"));
-        User receiver = userRepository.findById(dtoMini.getReceiver_id()).orElseThrow(() -> new RuntimeException("User not found"));
+        Person sender = userRepository.findById(dtoMini.getSender_id()).orElseThrow(() -> new RuntimeException("User not found"));
+        Person receiver = userRepository.findById(dtoMini.getReceiver_id()).orElseThrow(() -> new RuntimeException("User not found"));
         chat.setSender(sender);
         chat.setReceiver(receiver);
         return modelMapper.map(chatRepository.save(chat), ChatDtoRsp.class);

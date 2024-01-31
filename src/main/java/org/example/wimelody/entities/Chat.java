@@ -16,8 +16,8 @@ public class Chat {
     private Long id;
     private String content;
     @ManyToOne
-    private User sender;
+    private Person sender;
     @ManyToOne
-    private User receiver;
+    private Person receiver;
     private LocalDateTime sentAt;
 }

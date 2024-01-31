@@ -5,11 +5,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.example.wimelody.dto.user.UserCredential;
 import org.example.wimelody.dto.user.UserDtoRsp;
-import org.example.wimelody.entities.User;
+import org.example.wimelody.entities.Admin;
+import org.example.wimelody.entities.Person;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -49,11 +48,11 @@ public class UserAuthProvider {
 
         DecodedJWT decodedJWT = verifier.verify(token);
 
-        User user = new User();
-        user.setEmail(decodedJWT.getIssuer());
-        user.setUsername(decodedJWT.getClaim("username").asString());
+        Person person = new Admin();
+        person.setEmail(decodedJWT.getIssuer());
+        person.setUsername(decodedJWT.getClaim("username").asString());
 
-        return new UsernamePasswordAuthenticationToken( user, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(person, null, Collections.emptyList());
 
 
     }
