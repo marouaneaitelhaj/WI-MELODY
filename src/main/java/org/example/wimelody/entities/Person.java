@@ -1,28 +1,22 @@
 package org.example.wimelody.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
 
 @Data
+@Inheritance
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_app", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email")
-})
+//@Table(name = "user_app", uniqueConstraints = {
+        //@UniqueConstraint(columnNames = "username"),
+        //@UniqueConstraint(columnNames = "email")
+//})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
