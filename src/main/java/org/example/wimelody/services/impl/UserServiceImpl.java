@@ -6,7 +6,7 @@ import org.example.wimelody.dto.user.UserCredential;
 import org.example.wimelody.dto.user.UserDtoReq;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.Person;
-import org.example.wimelody.exceptions.NotFoundExceprion;
+import org.example.wimelody.exceptions.NotFoundException;
 import org.example.wimelody.repositories.UserRepository;
 import org.example.wimelody.services.inter.UserService;
 import org.modelmapper.ModelMapper;
@@ -59,11 +59,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDtoRsp login(UserCredential userCredential) {
         Person person = userRepository.findByEmail(userCredential.getEmail()).orElseThrow(
-                () -> new NotFoundExceprion("User with email " + userCredential.getEmail() + " not found"));
+                () -> new NotFoundException("User with email " + userCredential.getEmail() + " not found"));
         if (passwordEncoder.matches(userCredential.getPassword(), person.getPassword())) {
             return modelMapper.map(person, UserDtoRsp.class);
         } else {
-            throw new NotFoundExceprion("Password not match");
+            throw new NotFoundException("Password not match");
         }
     }
 

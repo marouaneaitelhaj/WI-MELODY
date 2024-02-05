@@ -1,7 +1,7 @@
 package org.example.wimelody.exceptions;
 
-public class NotFoundExceprion extends RuntimeException {
-    public NotFoundExceprion(String message) {
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
         super(message);
     }
 }
