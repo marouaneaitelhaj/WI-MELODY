@@ -4,6 +4,8 @@ import org.example.wimelody.dto.admin.AdminDtoReq;
 import org.example.wimelody.dto.admin.AdminDtoRsp;
 import org.example.wimelody.services.BaseService;
 
-public interface AdminService extends BaseService<AdminDtoRsp, AdminDtoReq, Long> {
+import java.util.UUID;
+
+public interface AdminService extends BaseService<AdminDtoRsp, AdminDtoReq, UUID> {
     
 }

@@ -1,4 +1,4 @@
-package com.example.demo.reqrsp;
+package org.example.wimelody.reqrsp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

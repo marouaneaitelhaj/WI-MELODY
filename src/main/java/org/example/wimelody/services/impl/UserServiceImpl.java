@@ -5,9 +5,9 @@ import java.util.List;
 import org.example.wimelody.dto.user.UserCredential;
 import org.example.wimelody.dto.user.UserDtoReq;
 import org.example.wimelody.dto.user.UserDtoRsp;
-import org.example.wimelody.entities.Person;
+import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.exceptions.NotFoundException;
-import org.example.wimelody.repositories.UserRepository;
+import org.example.wimelody.repositories.DBUserRepository;
 import org.example.wimelody.services.inter.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final DBUserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDtoRsp save(UserDtoReq dtoMini) {
-        Person person = modelMapper.map(dtoMini, Person.class);
+        DBUser person = modelMapper.map(dtoMini, DBUser.class);
         person.setPassword(passwordEncoder.encode(dtoMini.getPassword()));
         return modelMapper.map(userRepository.save(person), UserDtoRsp.class);
     }
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDtoRsp login(UserCredential userCredential) {
-        Person person = userRepository.findByEmail(userCredential.getEmail()).orElseThrow(
+        DBUser person = userRepository.findByEmail(userCredential.getEmail()).orElseThrow(
                 () -> new NotFoundException("User with email " + userCredential.getEmail() + " not found"));
         if (passwordEncoder.matches(userCredential.getPassword(), person.getPassword())) {
             return modelMapper.map(person, UserDtoRsp.class);

@@ -1,15 +1,16 @@
 package org.example.wimelody.services.impl;
 
-import com.example.demo.config.JwtService;
-import com.example.demo.entities.DbUser;
-import com.example.demo.enums.Role;
-import com.example.demo.repositories.UserRepository;
-import com.example.demo.reqrsp.AuthenticationRequest;
-import com.example.demo.reqrsp.AuthenticationResponse;
-import com.example.demo.reqrsp.RegisterRequest;
-import com.example.demo.services.intr.AuthenticationServiceInterface;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.wimelody.config.JwtService;
+import org.example.wimelody.entities.DBUser;
+import org.example.wimelody.enums.Role;
+import org.example.wimelody.repositories.DBUserRepository;
+import org.example.wimelody.reqrsp.AuthenticationRequest;
+import org.example.wimelody.reqrsp.AuthenticationResponse;
+import org.example.wimelody.reqrsp.RegisterRequest;
+import org.example.wimelody.services.inter.AuthenticationServiceInterface;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService implements AuthenticationServiceInterface {
 
-    private  final UserRepository userRepository;
+    private  final DBUserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
 
@@ -46,7 +47,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
-        var user = DbUser.builder()
+        var user = DBUser.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(Role.USER)
@@ -58,7 +59,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
                 .build();
     }
     @Override
-    public DbUser getUser(String name) {
+    public DBUser getUser(String name) {
         return userRepository.findByUsername(name).orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

@@ -1,6 +1,7 @@
 package org.example.wimelody.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.example.wimelody.dto.admin.AdminDtoReq;
 import org.example.wimelody.dto.admin.AdminDtoRsp;
@@ -15,19 +16,19 @@ public class AdminServiceImpl  implements AdminService{
     }
 
     @Override
-    public AdminDtoRsp update(AdminDtoReq dtoMini, Long f) {
+    public AdminDtoRsp update(AdminDtoReq dtoMini, UUID f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public Boolean delete(Long f) {
+    public Boolean delete(UUID f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     @Override
-    public AdminDtoRsp findOne(Long f) {
+    public AdminDtoRsp findOne(UUID f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

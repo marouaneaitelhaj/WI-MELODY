@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Admin extends Person {
+public class Admin extends DBUser {
     private String roleksjdqoijj;
 }

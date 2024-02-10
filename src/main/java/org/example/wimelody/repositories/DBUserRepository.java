@@ -3,10 +3,10 @@ package org.example.wimelody.repositories;
 
 import java.util.Optional;
 
-import org.example.wimelody.entities.Person;
+import org.example.wimelody.entities.DBUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<Person, Long> {
-    Optional<Person> findByEmail(String email);
-    Optional<Person> findByUsername(String username);
+public interface DBUserRepository extends JpaRepository<DBUser, Long> {
+    Optional<DBUser> findByEmail(String email);
+    Optional<DBUser> findByUsername(String username);
 }

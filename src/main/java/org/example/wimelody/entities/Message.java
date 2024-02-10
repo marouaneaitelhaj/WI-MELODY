@@ -20,6 +20,6 @@ public class Message {
     @ManyToOne
     private Room room;
     @ManyToOne
-    private Person sender;
+    private DBUser sender;
     private LocalTime time;
 }

@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package org.example.wimelody.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

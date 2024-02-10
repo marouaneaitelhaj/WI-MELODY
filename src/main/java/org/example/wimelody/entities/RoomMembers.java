@@ -14,7 +14,7 @@ public class RoomMembers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Person member;
+    private DBUser member;
     @ManyToOne
     private Room room;
 }

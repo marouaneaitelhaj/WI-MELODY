@@ -1,14 +1,15 @@
-package com.example.demo.services.intr;
+package org.example.wimelody.services.inter;
 
-import com.example.demo.entities.DbUser;
-import com.example.demo.reqrsp.AuthenticationRequest;
-import com.example.demo.reqrsp.AuthenticationResponse;
-import com.example.demo.reqrsp.RegisterRequest;
+
+import org.example.wimelody.entities.DBUser;
+import org.example.wimelody.reqrsp.AuthenticationRequest;
+import org.example.wimelody.reqrsp.AuthenticationResponse;
+import org.example.wimelody.reqrsp.RegisterRequest;
 
 public interface AuthenticationServiceInterface {
     AuthenticationResponse login(AuthenticationRequest authenticationRequest);
 
     AuthenticationResponse register(RegisterRequest registerRequest);
 
-    DbUser getUser(String name);
+    DBUser getUser(String name);
 }

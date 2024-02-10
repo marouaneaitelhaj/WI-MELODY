@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Artist  extends Person {
+public class Artist  extends DBUser {
     @OneToMany(mappedBy = "artist")
     private List<Tier> tiers;
 }

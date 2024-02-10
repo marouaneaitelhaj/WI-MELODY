@@ -1,6 +1,7 @@
 package org.example.wimelody.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.example.wimelody.dto.artist.ArtistDtoReq;
 import org.example.wimelody.dto.artist.ArtistDtoRsp;
@@ -15,19 +16,19 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public ArtistDtoRsp update(ArtistDtoReq dtoMini, Long f) {
+    public ArtistDtoRsp update(ArtistDtoReq dtoMini, UUID f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public Boolean delete(Long f) {
+    public Boolean delete(UUID f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     @Override
-    public ArtistDtoRsp findOne(Long f) {
+    public ArtistDtoRsp findOne(UUID f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

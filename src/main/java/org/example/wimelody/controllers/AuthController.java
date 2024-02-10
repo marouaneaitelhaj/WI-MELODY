@@ -1,35 +1,48 @@
 package org.example.wimelody.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.example.wimelody.config.UserAuthProvider;
 import org.example.wimelody.dto.user.UserCredential;
 import org.example.wimelody.dto.user.UserDtoReq;
 import org.example.wimelody.dto.user.UserDtoRsp;
+import org.example.wimelody.entities.DBUser;
+import org.example.wimelody.reqrsp.AuthenticationRequest;
+import org.example.wimelody.reqrsp.AuthenticationResponse;
+import org.example.wimelody.reqrsp.RegisterRequest;
+import org.example.wimelody.services.impl.AuthenticationService;
 import org.example.wimelody.services.inter.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
 
-        private  final UserService userService;
+    private  final AuthenticationService authenticationService;
 
-        private  final UserAuthProvider userAuthProvider;
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserCredential userCredential) {
-        UserDtoRsp userDtoRsp = userService.login(userCredential);
-        userDtoRsp.setToken(userAuthProvider.createToken(userDtoRsp));
-        return ResponseEntity.ok(userDtoRsp);
+    public ResponseEntity<AuthenticationResponse> login(
+            @RequestBody AuthenticationRequest authenticationRequest
+    ) {
+        return ResponseEntity.ok(authenticationService.login(authenticationRequest));
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody UserDtoReq userCredential) {
-        UserDtoRsp userDtoRsp = userService.save(userCredential);
-        userDtoRsp.setToken(userAuthProvider.createToken(userDtoRsp));
-        return ResponseEntity.ok(userDtoRsp);
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody RegisterRequest registerRequest
+    ) {
+        return ResponseEntity.ok(authenticationService.register(registerRequest));
+    }
+
+
+
+    @PostMapping("/user")
+    public ResponseEntity<DBUser> currentUserName(Principal principal) {
+        return ResponseEntity.ok(authenticationService.getUser(principal.getName()));
     }
 }

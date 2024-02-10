@@ -1,4 +1,4 @@
-package com.example.demo.enums;
+package org.example.wimelody.enums;
 
 public enum Role {
     USER,

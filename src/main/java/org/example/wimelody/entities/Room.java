@@ -17,7 +17,7 @@ public class Room {
     private Long id;
     private String name;
     @ManyToOne
-    private Person owner;
+    private DBUser owner;
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomMembers> members;
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)

@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Fan extends Person {
+public class Fan extends DBUser {
     @OneToMany(mappedBy = "fan")
     private List<Like> likes;
 
