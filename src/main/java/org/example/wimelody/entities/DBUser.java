@@ -10,9 +10,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.wimelody.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -21,54 +23,43 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public class DBUser implements UserDetails {
+public class DBUser   implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "uuid", updatable = false)
     private UUID id;
-
-    protected String fullName;
-
-    @NotBlank
-    @Size(max = 20)
-    protected String username;
-
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    protected String email;
-
-    @NotBlank
-    @Size(max = 120)
-    protected String password;
-        
-
-    protected String points;
-
+    private String username;
+    private String password;
+    private String profilePicture;
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
+
+
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
+
+
 }

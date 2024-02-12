@@ -1,10 +1,13 @@
 package org.example.wimelody.config;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
+import org.example.wimelody.exceptions.GlobalExceptionHandler;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +18,14 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@AllArgsConstructor
 public class JwtService {
+
     public String extractUsername(String jwt) {
         return extractClaim(jwt, Claims::getSubject);
     }
 
-    private Claims extractAllClaims(String jwt) {
+    public Claims extractAllClaims(String jwt) throws ExpiredJwtException {
         return Jwts.parserBuilder().setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(jwt)
@@ -37,16 +42,16 @@ public class JwtService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(jwt));
     }
 
-    private boolean isTokenExpired(String jwt) {
+    public boolean isTokenExpired(String jwt) {
         return  extractExpiration(jwt).before(new Date());
     }
 
-    private Date extractExpiration(String jwt) {
+    public Date extractExpiration(String jwt) {
         return extractClaim(jwt, Claims::getExpiration);
     }
 
 
-    private String generateToken(Map<String,Object> exctraClaims, UserDetails userDetails){
+    public String generateToken(Map<String, Object> exctraClaims, UserDetails userDetails) {
         return Jwts.builder()
                 .setClaims(exctraClaims)
                 .setSubject(userDetails.getUsername())
@@ -61,7 +66,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    private Key getSignKey() {
+    public Key getSignKey() {
         byte[] key = Decoders.BASE64.decode("ayrwwtjldywrexirqvbrbbeithefgjhcsogreixvffkgvbxhq");
         return Keys.hmacShaKeyFor(key);
     }
