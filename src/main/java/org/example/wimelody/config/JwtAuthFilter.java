@@ -1,6 +1,5 @@
 package org.example.wimelody.config;
 
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,11 +27,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
-    private final HandlerExceptionResolver handlerExceptionResolver;
+    //private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
-        try {
             final String authorizationHeader = request.getHeader("Authorization");
             final String jwt;
             final String username;
@@ -53,8 +51,5 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        } catch (JwtException exception) {
-            handlerExceptionResolver.resolveException(request, response, null, exception);
-        }
     }
 }

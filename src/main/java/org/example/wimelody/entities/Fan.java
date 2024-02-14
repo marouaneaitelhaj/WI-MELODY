@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Fan extends DBUser {
+    private LocalDate joinDate;
     @OneToMany(mappedBy = "fan")
     private List<Like> likes;
 

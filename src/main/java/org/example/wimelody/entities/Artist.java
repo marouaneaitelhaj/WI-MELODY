@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Artist  extends DBUser {
+    private String cardArtistNumber;
     @OneToMany(mappedBy = "artist")
     private List<Tier> tiers;
 }

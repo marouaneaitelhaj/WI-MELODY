@@ -1,7 +1,7 @@
 package org.example.wimelody.config;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -17,15 +17,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Service
 @AllArgsConstructor
+@Service
 public class JwtService {
+    private final GlobalExceptionHandler globalExceptionHandler;
 
     public String extractUsername(String jwt) {
-        return extractClaim(jwt, Claims::getSubject);
+        try {
+            return extractClaim(jwt, Claims::getSubject);
+        } catch (JwtException exception){
+            globalExceptionHandler.handleJwtException(exception);
+        }
+        return  null;
     }
 
-    public Claims extractAllClaims(String jwt) throws ExpiredJwtException {
+    public Claims extractAllClaims(String jwt) {
         return Jwts.parserBuilder().setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(jwt)

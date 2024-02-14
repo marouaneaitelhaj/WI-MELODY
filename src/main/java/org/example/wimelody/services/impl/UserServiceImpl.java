@@ -7,7 +7,9 @@ import org.example.wimelody.dto.user.UserDtoReq;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.exceptions.NotFoundEx;
+import org.example.wimelody.repositories.ArtistRepository;
 import org.example.wimelody.repositories.DBUserRepository;
+import org.example.wimelody.repositories.FanRepository;
 import org.example.wimelody.services.inter.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
     private final DBUserRepository userRepository;
+    private final FanRepository fanRepository;
+    private final ArtistRepository artistRepository;
 
     private final PasswordEncoder passwordEncoder;
 

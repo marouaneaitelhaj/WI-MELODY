@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.wimelody.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,14 +28,15 @@ public class DBUser   implements UserDetails {
     @Column(columnDefinition = "uuid", updatable = false)
     private UUID id;
     private String username;
+    private String email;
     private String password;
     private String profilePicture;
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(role.getName()));
     }
 
     @Override

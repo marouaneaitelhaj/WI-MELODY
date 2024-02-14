@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.wimelody.entities.Role;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +18,7 @@ public class UserDtoReq {
     @NotNull
     private String password;
     @NotNull
-    private String fullName;
+    private String profilePicture;
+    @NotNull
+    private Role role;
 }

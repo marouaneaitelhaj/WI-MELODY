@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Admin extends DBUser {
-    private String roleksjdqoijj;
+
 }

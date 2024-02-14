@@ -34,7 +34,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest registerRequest
     ) {
@@ -44,7 +44,11 @@ public class AuthController {
 
 
     @PostMapping("/user")
-    public ResponseEntity<DBUser> currentUserName(Principal principal) {
+    public ResponseEntity<?> currentUserName(Principal principal) {
+        if (principal == null) {
+            // return that the user is not authenticated
+            return ResponseEntity.status(401).body("User not authenticated");
+        }
         return ResponseEntity.ok(authenticationService.getUser(principal.getName()));
     }
 }

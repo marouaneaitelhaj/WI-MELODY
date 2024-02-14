@@ -4,17 +4,23 @@ package org.example.wimelody.services.impl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.wimelody.config.JwtService;
+import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.DBUser;
-import org.example.wimelody.enums.Role;
+import org.example.wimelody.entities.Fan;
+import org.example.wimelody.entities.Role;
 import org.example.wimelody.repositories.DBUserRepository;
+import org.example.wimelody.repositories.FanRepository;
 import org.example.wimelody.reqrsp.AuthenticationRequest;
 import org.example.wimelody.reqrsp.AuthenticationResponse;
 import org.example.wimelody.reqrsp.RegisterRequest;
 import org.example.wimelody.services.inter.AuthenticationServiceInterface;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Data
@@ -23,7 +29,11 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 
     private  final DBUserRepository userRepository;
 
+    private final FanRepository fanRepository;
+
     private PasswordEncoder passwordEncoder;
+
+    private final ModelMapper modelMapper;
 
     private final JwtService jwtService;
 
@@ -47,19 +57,26 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
-        var user = DBUser.builder()
+        Role role = new Role();
+        role.setId(3L);
+        DBUser user = DBUser.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(Role.USER)
+                .role(role)
+                .profilePicture(registerRequest.getProfilePicture())
+                .email(registerRequest.getEmail())
                 .build();
-        userRepository.save(user);
+        Fan fan = modelMapper.map(user, Fan.class);
+        fan.setJoinDate(LocalDate.now());
+        fanRepository.save(fan);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
     @Override
-    public DBUser getUser(String name) {
-        return userRepository.findByUsername(name).orElseThrow(() -> new RuntimeException("User not found"));
+    public UserDtoRsp getUser(String name) {
+        DBUser user = userRepository.findByUsername(name).orElseThrow(() -> new RuntimeException("User not found"));
+        return modelMapper.map(user, UserDtoRsp.class);
     }
 }
