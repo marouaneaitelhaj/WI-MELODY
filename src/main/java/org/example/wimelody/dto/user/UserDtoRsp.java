@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.wimelody.entities.Role;
 
 import java.util.UUID;
 
@@ -25,5 +26,7 @@ public class UserDtoRsp {
     private String email;
 
     private String profilePicture;
+
+    private Role role;
 
 }

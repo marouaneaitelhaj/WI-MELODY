@@ -1,2 +1,7 @@
-package org.example.wimelody;public class ArtistRequestsStatus {
+package org.example.wimelody;
+
+public enum ArtistRequestsStatus {
+    PENDING,
+    APPROVED,
+    REJECTED
 }

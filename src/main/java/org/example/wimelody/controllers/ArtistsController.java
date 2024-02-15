@@ -11,17 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/artists")
+@RequestMapping("/api/v1/becomeartist")
 @RequiredArgsConstructor
 public class ArtistsController {
 
-    public  final ArtistServiceImpl artistService;
-    @GetMapping
-    public ResponseEntity<?> getArtists() {
-        return ResponseEntity.ok(artistService.findAll());
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getArtist(@PathVariable UUID id) {
-        return ResponseEntity.ok(artistService.findById(id));
-    }
+
 }
