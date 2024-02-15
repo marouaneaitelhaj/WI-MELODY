@@ -3,6 +3,8 @@ package org.example.wimelody.dto.tier;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class TierDtoReq {
     private Long id;
@@ -15,5 +17,5 @@ public class TierDtoReq {
     @NotNull
     private Double monthlyPoints;
     @NotNull
-    private Long artist_id;
+    private UUID artist_id;
 }

@@ -27,7 +27,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDtoRsp findOne(Long f) {
+    public CommentDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

@@ -27,7 +27,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public LikeDtoRsp findOne(Long f) {
+    public LikeDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

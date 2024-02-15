@@ -28,7 +28,7 @@ public class AdminServiceImpl  implements AdminService{
     }
 
     @Override
-    public AdminDtoRsp findOne(UUID f) {
+    public AdminDtoRsp findById(UUID f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

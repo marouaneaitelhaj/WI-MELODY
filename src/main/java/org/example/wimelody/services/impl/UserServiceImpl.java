@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDtoRsp findOne(Long f) {
+    public UserDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

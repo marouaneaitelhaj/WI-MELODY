@@ -9,7 +9,7 @@ public interface BaseService<DTO_RSP, DTO_MINI, F> {
 
     Boolean delete(F f);
 
-    DTO_RSP findOne(F f);
+    DTO_RSP findById(F f);
 
     List<DTO_RSP> findAll();
 }

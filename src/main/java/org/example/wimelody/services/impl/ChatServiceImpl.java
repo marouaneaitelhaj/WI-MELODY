@@ -38,7 +38,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ChatDtoRsp findOne(Long f) {
+    public ChatDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

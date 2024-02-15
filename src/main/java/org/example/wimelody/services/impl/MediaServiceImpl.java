@@ -27,7 +27,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaDtoRsp findOne(Long f) {
+    public MediaDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

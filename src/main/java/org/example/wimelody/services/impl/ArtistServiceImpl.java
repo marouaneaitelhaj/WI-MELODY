@@ -1,16 +1,17 @@
 package org.example.wimelody.services.impl;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.artist.ArtistDtoReq;
 import org.example.wimelody.dto.artist.ArtistDtoRsp;
+import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.ArtistRepository;
 import org.example.wimelody.services.inter.ArtistService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -38,9 +39,8 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public ArtistDtoRsp findOne(UUID f) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findOne'");
+    public ArtistDtoRsp findById(UUID f) {
+        return modelMapper.map(artistRepository.findById(f).orElseThrow(() -> new NotFoundEx("Artist Not Found")), ArtistDtoRsp.class);
     }
 
     @Override

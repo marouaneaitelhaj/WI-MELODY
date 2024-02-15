@@ -27,7 +27,7 @@ public class PackServiceImpl implements PackService {
     }
 
     @Override
-    public PackDtoRsp findOne(Long f) {
+    public PackDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

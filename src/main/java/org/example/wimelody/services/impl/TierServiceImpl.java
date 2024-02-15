@@ -46,7 +46,7 @@ public class TierServiceImpl implements TierService {
     }
 
     @Override
-    public TierDtoRsp findOne(Long f) {
+    public TierDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

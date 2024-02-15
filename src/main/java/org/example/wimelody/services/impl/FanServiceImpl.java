@@ -27,7 +27,7 @@ public class FanServiceImpl implements FanService {
     }
 
     @Override
-    public FanDtoRsp findOne(Long f) {
+    public FanDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

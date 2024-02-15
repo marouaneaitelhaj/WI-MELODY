@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentDtoRsp findOne(Long f) {
+    public PaymentDtoRsp findById(Long f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }

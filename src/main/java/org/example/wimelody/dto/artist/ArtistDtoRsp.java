@@ -1,4 +1,7 @@
 package org.example.wimelody.dto.artist;
 
-public class ArtistDtoRsp {
+import org.example.wimelody.dto.user.UserDtoRsp;
+
+public class ArtistDtoRsp extends UserDtoRsp {
+
 }
