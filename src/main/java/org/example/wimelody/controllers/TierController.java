@@ -1,13 +1,12 @@
 package org.example.wimelody.controllers;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.wimelody.dto.tier.TierDtoReq;
 import org.example.wimelody.dto.tier.TierDtoRsp;
-import org.example.wimelody.services.impl.TierServiceImpl;
 import org.example.wimelody.services.inter.TierService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -16,28 +15,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TierController  {
 
+    private final TierService tierService;
 
     public ResponseEntity<?> save(TierDtoReq tierDtoReq) {
-        return null;
+        return ResponseEntity.ok(tierService.save(tierDtoReq));
     }
 
 
     public ResponseEntity<?> update(TierDtoReq tierDtoReq, Long aLong) {
-        return null;
+
+        return ResponseEntity.ok(tierService.update(tierDtoReq, aLong));
     }
 
 
-    public Boolean delete(Long aLong) {
-        return null;
+    public ResponseEntity<?> delete(Long aLong) {
+
+        return ResponseEntity.ok(tierService.delete(aLong));
     }
 
 
     public ResponseEntity<?> findById(Long aLong) {
-        return null;
+
+        return ResponseEntity.ok(tierService.findById(aLong));
     }
 
 
     public List<TierDtoRsp> findAll() {
-        return null;
+
+        return tierService.findAll();
     }
 }

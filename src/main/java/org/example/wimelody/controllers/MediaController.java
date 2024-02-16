@@ -24,7 +24,7 @@ public class MediaController  {
     }
 
 
-    public Boolean delete(Long aLong) {
+    public ResponseEntity<?> delete(Long aLong) {
         return null;
     }
 

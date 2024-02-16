@@ -16,7 +16,7 @@ public class LikeController   {
         return null;
     }
 
-    public Boolean delete(Long aLong) {
+    public ResponseEntity<?> delete(Long aLong) {
         return null;
     }
 

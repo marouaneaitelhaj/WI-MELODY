@@ -14,27 +14,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PaymentController  {
 
+    private final PaymentService paymentService;
+
     public ResponseEntity<?> save(PaymentDtoReq paymentDtoReq) {
-        return null;
+        return ResponseEntity.ok(paymentService.save(paymentDtoReq));
     }
 
 
     public ResponseEntity<?> update(PaymentDtoReq paymentDtoReq, Long aLong) {
-        return null;
+        return ResponseEntity.ok(paymentService.update(paymentDtoReq, aLong));
     }
 
 
-    public Boolean delete(Long aLong) {
-        return null;
+    public ResponseEntity<?> delete(Long aLong) {
+        return ResponseEntity.ok(paymentService.delete(aLong));
     }
 
 
     public ResponseEntity<?> findById(Long aLong) {
-        return null;
+        return ResponseEntity.ok(paymentService.findById(aLong));
     }
 
 
-    public List<PaymentDtoRsp> findAll() {
-        return null;
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(paymentService.findAll());
     }
 }

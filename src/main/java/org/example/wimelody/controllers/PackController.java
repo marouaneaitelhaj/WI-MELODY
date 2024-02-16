@@ -24,7 +24,7 @@ public class PackController  {
     }
 
 
-    public Boolean delete(Long aLong) {
+    public ResponseEntity<?> delete(Long aLong) {
         return null;
     }
 
