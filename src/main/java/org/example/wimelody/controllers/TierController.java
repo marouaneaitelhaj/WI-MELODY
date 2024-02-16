@@ -2,48 +2,42 @@ package org.example.wimelody.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.wimelody.dto.tier.TierDtoReq;
+import org.example.wimelody.dto.tier.TierDtoRsp;
+import org.example.wimelody.services.impl.TierServiceImpl;
+import org.example.wimelody.services.inter.TierService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/fish")
+@RequestMapping("/api/v1/tier")
 @RequiredArgsConstructor
-public class TierController {
-    private final FishService fishServiceImpl;
+public class TierController  {
 
-    @PostMapping
-    public ResponseEntity<?> createFish(@Valid @RequestBody FishDtoReq fishDtoReq) {
-        fishDtoReq = fishServiceImpl.save(fishDtoReq);
-        Map<String, Object> response = new HashMap<>();
-        response.put("data", fishDtoReq);
-        response.put("message", "Fish created successfully");
-        return ResponseEntity.ok(response);
+
+    public ResponseEntity<?> save(TierDtoReq tierDtoReq) {
+        return null;
     }
 
-    @GetMapping
-    public ResponseEntity<?> getFishs() {
-        return ResponseEntity.ok(fishServiceImpl.findAll());
+
+    public ResponseEntity<?> update(TierDtoReq tierDtoReq, Long aLong) {
+        return null;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getFish(@PathVariable String id) {
-        return ResponseEntity.ok(fishServiceImpl.findOne(id));
+
+    public Boolean delete(Long aLong) {
+        return null;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateFish(@PathVariable String id, @Valid @RequestBody FishDtoReq fishDtoReq) {
-        fishDtoReq = fishServiceImpl.update(fishDtoReq, id);
-        Map<String, Object> response = new HashMap<>();
-        response.put("data", fishDtoReq);
-        response.put("message", "Fish updated successfully");
-        return ResponseEntity.ok(response);
+
+    public ResponseEntity<?> findById(Long aLong) {
+        return null;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFish(@PathVariable String id) {
-        fishServiceImpl.delete(id);
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Fish deleted successfully");
-        return ResponseEntity.ok(response);
+
+    public List<TierDtoRsp> findAll() {
+        return null;
     }
 }
