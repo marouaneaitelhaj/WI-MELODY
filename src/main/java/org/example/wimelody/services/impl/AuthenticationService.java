@@ -6,10 +6,8 @@ import lombok.Data;
 import org.example.wimelody.config.JwtService;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.DBUser;
-import org.example.wimelody.entities.Fan;
-import org.example.wimelody.entities.Role;
+import org.example.wimelody.enums.Role;
 import org.example.wimelody.repositories.DBUserRepository;
-import org.example.wimelody.repositories.FanRepository;
 import org.example.wimelody.reqrsp.AuthenticationRequest;
 import org.example.wimelody.reqrsp.AuthenticationResponse;
 import org.example.wimelody.reqrsp.RegisterRequest;
@@ -20,8 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @AllArgsConstructor
 @Data
 @Service
@@ -29,7 +25,6 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 
     private  final DBUserRepository userRepository;
 
-    private final FanRepository fanRepository;
 
     private PasswordEncoder passwordEncoder;
 
@@ -57,18 +52,14 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
-        Role role = new Role();
-        role.setId(3L);
         DBUser user = DBUser.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(role)
+                .role(Role.USER)
                 .profilePicture(registerRequest.getProfilePicture())
                 .email(registerRequest.getEmail())
                 .build();
-        Fan fan = modelMapper.map(user, Fan.class);
-        fan.setJoinDate(LocalDate.now());
-        fanRepository.save(fan);
+        userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

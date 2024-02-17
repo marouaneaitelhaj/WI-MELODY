@@ -13,7 +13,7 @@ public class TierDtoReq {
     @NotNull
     private String description;
     @NotNull
-    private Double monthlyamount;
+    private Double price;
     @NotNull
     private Double monthlyPoints;
     @NotNull

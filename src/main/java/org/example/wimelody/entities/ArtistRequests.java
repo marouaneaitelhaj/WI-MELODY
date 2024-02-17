@@ -18,12 +18,12 @@ public class ArtistRequests {
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    private Fan fan;
+    private DBUser fan;
 
     private String ArtistName;
 
     private LocalDate RequestDate;
     private ArtistRequestsStatus Status;
     @OneToOne
-    private Admin admin;
+    private DBUser admin;
 }

@@ -5,10 +5,10 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.tier.TierDtoReq;
 import org.example.wimelody.dto.tier.TierDtoRsp;
-import org.example.wimelody.entities.Artist;
+import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.entities.Tier;
 import org.example.wimelody.exceptions.NotFoundEx;
-import org.example.wimelody.repositories.ArtistRepository;
+import org.example.wimelody.repositories.DBUserRepository;
 import org.example.wimelody.repositories.TierRepository;
 import org.example.wimelody.services.inter.TierService;
 import org.modelmapper.ModelMapper;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TierServiceImpl implements TierService {
 
-    private final ArtistRepository artistRepository;
+    private final DBUserRepository artistRepository;
 
     private final TierRepository tierRepository;
 
@@ -26,7 +26,7 @@ public class TierServiceImpl implements TierService {
 
     @Override
     public TierDtoRsp save(TierDtoReq dtoMini) {
-        Artist artist = artistRepository.findById(dtoMini.getArtist_id())
+        DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
                 .orElseThrow(() -> new NotFoundEx("Artist not found"));
         Tier tier = modelMapper.map(dtoMini, Tier.class);
         tier.setArtist(artist);

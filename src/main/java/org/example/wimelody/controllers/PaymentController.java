@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/v1/payment")
 @RequiredArgsConstructor
 public class PaymentController  {
-
+/*
     private final PaymentService paymentService;
 
     public ResponseEntity<?> save(PaymentDtoReq paymentDtoReq) {
@@ -38,5 +38,5 @@ public class PaymentController  {
 
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(paymentService.findAll());
-    }
+    }*/
 }

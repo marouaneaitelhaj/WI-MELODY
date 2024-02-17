@@ -16,5 +16,5 @@ public class Like {
     @ManyToOne
     private Pack pack;
     @ManyToOne
-    private Fan fan;
+    private DBUser fan;
 }

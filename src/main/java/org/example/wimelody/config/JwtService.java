@@ -23,12 +23,7 @@ public class JwtService {
     private final GlobalExceptionHandler globalExceptionHandler;
 
     public String extractUsername(String jwt) {
-        try {
             return extractClaim(jwt, Claims::getSubject);
-        } catch (JwtException exception){
-            globalExceptionHandler.handleJwtException(exception);
-        }
-        return  null;
     }
 
     public Claims extractAllClaims(String jwt) {

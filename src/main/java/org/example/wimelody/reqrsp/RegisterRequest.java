@@ -3,7 +3,7 @@ package org.example.wimelody.reqrsp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.example.wimelody.entities.Role;
+import org.example.wimelody.enums.Role;
 
 @Builder
 @AllArgsConstructor

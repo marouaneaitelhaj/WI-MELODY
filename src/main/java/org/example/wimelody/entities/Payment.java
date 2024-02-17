@@ -19,5 +19,5 @@ public class Payment {
     private Tier tier;
 
     @ManyToOne
-    private Fan fan;
+    private DBUser fan;
 }

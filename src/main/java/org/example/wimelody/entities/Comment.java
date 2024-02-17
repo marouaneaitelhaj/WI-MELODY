@@ -16,7 +16,7 @@ public class Comment {
     private Long id;
     private String content;
     @ManyToOne
-    private  Fan fan;
+    private  DBUser fan;
     private LocalDateTime date;
     @ManyToOne
     private Pack pack;

@@ -1,10 +1,7 @@
 package org.example.wimelody.dto.artistRequests;
 
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 import org.example.wimelody.ArtistRequestsStatus;
-import org.example.wimelody.entities.Admin;
-import org.example.wimelody.entities.Fan;
 
 import java.time.LocalDate;
 import java.util.UUID;
