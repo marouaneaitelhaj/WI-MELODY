@@ -7,6 +7,7 @@ import org.example.wimelody.dto.tier.TierDtoReq;
 import org.example.wimelody.dto.tier.TierDtoRsp;
 import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.entities.Tier;
+import org.example.wimelody.exceptions.AlreadyExistsEx;
 import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.DBUserRepository;
 import org.example.wimelody.repositories.TierRepository;
@@ -28,6 +29,9 @@ public class TierServiceImpl implements TierService {
     public TierDtoRsp save(TierDtoReq dtoMini) {
         DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
                 .orElseThrow(() -> new NotFoundEx("Artist not found"));
+        tierRepository.findByPrice(dtoMini.getPrice()).ifPresent(tier -> {
+            throw new AlreadyExistsEx("Tier already exists");
+        });
         Tier tier = modelMapper.map(dtoMini, Tier.class);
         tier.setArtist(artist);
         return modelMapper.map(tierRepository.save(tier), TierDtoRsp.class);

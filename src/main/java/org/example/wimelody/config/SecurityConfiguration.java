@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/api/v1/tier/**").hasAnyRole("ARTIST")
+                                .requestMatchers("/api/v1/tier/**").authenticated()
                                 .anyRequest()
                                 .authenticated()
                 )

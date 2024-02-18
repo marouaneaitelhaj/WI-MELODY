@@ -17,7 +17,6 @@ public class TierDtoRsp {
     private Long id;
     private String name;
     private String description;
-    private Double monthlyamount;
-    private Double monthlyPoints;
+    private Double price;
     private List<PackDtoForTier> packs;
 }

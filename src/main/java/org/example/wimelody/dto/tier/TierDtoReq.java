@@ -15,7 +15,5 @@ public class TierDtoReq {
     @NotNull
     private Double price;
     @NotNull
-    private Double monthlyPoints;
-    @NotNull
     private UUID artist_id;
 }

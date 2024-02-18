@@ -1,9 +1,6 @@
 package org.example.wimelody.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +31,10 @@ public class DBUser   implements UserDetails {
     private String profilePicture;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "artist")
+    private List<Tier> tiers;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

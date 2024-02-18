@@ -26,9 +26,16 @@ public class GlobalExceptionHandler {
         return Map.of("error", e.getMessage());
     }
 
+    @ExceptionHandler(AlreadyExistsEx.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleAlreadyExistsException(AlreadyExistsEx ex) {
+         return  Map.of("error", ex.getMessage());
+    }
+
     @ExceptionHandler(JwtException.class)
-    public ResponseEntity<?> handleJwtException(JwtException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT Exception occurred: " + ex.getMessage());
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String, String> handleJwtException(JwtException ex) {
+        return Map.of("error", ex.getMessage());
     }
 
 }

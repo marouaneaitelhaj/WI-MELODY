@@ -5,6 +5,7 @@ import org.example.wimelody.dto.tier.TierDtoReq;
 import org.example.wimelody.dto.tier.TierDtoRsp;
 import org.example.wimelody.services.inter.TierService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class TierController  {
 
     private final TierService tierService;
 
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody TierDtoReq tierDtoReq) {
         return ResponseEntity.ok(tierService.save(tierDtoReq));
     }
