@@ -17,8 +17,8 @@ public class Tier {
     private String description;
     private Double price;
     private Double monthlyPoints;
-    //@OneToMany(mappedBy = "tier")
-    //private List<Pack> packs;
+    @OneToMany(mappedBy = "tier")
+    private List<Pack> packs;
     @ManyToOne
     private DBUser artist;
 }

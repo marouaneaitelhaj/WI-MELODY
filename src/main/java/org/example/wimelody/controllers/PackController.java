@@ -5,36 +5,59 @@ import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
 import org.example.wimelody.services.inter.PackService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/pack")
 @RequiredArgsConstructor
 public class PackController  {
 
-    public ResponseEntity<?> save(PackDtoReq packDtoReq) {
-        return null;
+
+    private final PackService packService;
+
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody PackDtoReq packDtoReq) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", packService.save(packDtoReq));
+        response.put("message", "Pack created successfully");
+        return ResponseEntity.ok(response);
     }
 
 
     public ResponseEntity<?> update(PackDtoReq packDtoReq, Long aLong) {
-        return null;
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", packService.update(packDtoReq, aLong));
+        response.put("message", "Pack updated successfully");
+        return ResponseEntity.ok(response);
     }
 
 
     public ResponseEntity<?> delete(Long aLong) {
-        return null;
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", packService.delete(aLong));
+        response.put("message", "Pack deleted successfully");
+        return ResponseEntity.ok(response);
     }
 
 
     public ResponseEntity<?> findById(Long aLong) {
-        return null;
+
+        return ResponseEntity.ok(packService.findById(aLong));
     }
 
-
+    @GetMapping
     public List<PackDtoRsp> findAll() {
-        return null;
+        return packService.findAll();
+    }
+
+    @GetMapping("/tier/{id}")
+    private List<PackDtoRsp> findAllByTier(@PathVariable String id) {
+        return packService.findAllByTier(Long.parseLong(id));
     }
 }

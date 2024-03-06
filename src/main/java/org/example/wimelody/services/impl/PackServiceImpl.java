@@ -1,17 +1,37 @@
 package org.example.wimelody.services.impl;
 
-import java.util.List;
-
+import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
+import org.example.wimelody.entities.Pack;
+import org.example.wimelody.entities.Tier;
+import org.example.wimelody.exceptions.NotFoundEx;
+import org.example.wimelody.repositories.PackRepository;
+import org.example.wimelody.repositories.TierRepository;
 import org.example.wimelody.services.inter.PackService;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+@AllArgsConstructor
+@Service
 public class PackServiceImpl implements PackService {
+
+    private final PackRepository packRepository;
+    private final TierRepository tierRepository;
+
+    private final ModelMapper modelMapper;
 
     @Override
     public PackDtoRsp save(PackDtoReq dtoMini) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        Tier tier = tierRepository.findById(dtoMini.getTier_id()).orElseThrow(() -> new NotFoundEx("Tier not found"));
+        Pack pack = modelMapper.map(dtoMini, Pack.class);
+        pack.setDate(LocalDateTime.now());
+        pack.setTier(tier);
+        pack = packRepository.save(pack);
+        return modelMapper.map(pack, PackDtoRsp.class);
     }
 
     @Override
@@ -34,7 +54,13 @@ public class PackServiceImpl implements PackService {
 
     @Override
     public List<PackDtoRsp> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        List<Pack> packs = packRepository.findAll();
+        return packs.stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList();
+    }
+
+    @Override
+    public List<PackDtoRsp> findAllByTier(Long id) {
+        Tier tier = tierRepository.findById(id).orElseThrow(() -> new NotFoundEx("Tier not found"));
+        return packRepository.findAllByTierId(id).stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList();
     }
 }

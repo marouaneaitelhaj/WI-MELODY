@@ -7,6 +7,7 @@ import org.example.wimelody.config.JwtService;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.enums.Role;
+import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.DBUserRepository;
 import org.example.wimelody.reqrsp.AuthenticationRequest;
 import org.example.wimelody.reqrsp.AuthenticationResponse;
@@ -55,7 +56,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
         DBUser user = DBUser.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(Role.USER)
+                .role(Role.FAN)
                 .profilePicture(registerRequest.getProfilePicture())
                 .email(registerRequest.getEmail())
                 .build();
@@ -67,7 +68,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
     }
     @Override
     public UserDtoRsp getUser(String name) {
-        DBUser user = userRepository.findByUsername(name).orElseThrow(() -> new RuntimeException("User not found"));
+        DBUser user = userRepository.findByUsername(name).orElseThrow(() -> new NotFoundEx("User not found"));
         return modelMapper.map(user, UserDtoRsp.class);
     }
 }

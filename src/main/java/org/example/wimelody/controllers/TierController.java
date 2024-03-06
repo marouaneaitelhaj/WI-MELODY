@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/tier")
@@ -21,18 +23,22 @@ public class TierController  {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody TierDtoReq tierDtoReq) {
-        return ResponseEntity.ok(tierService.save(tierDtoReq));
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", tierService.save(tierDtoReq));
+        response.put("message", "Tier created successfully");
+        return ResponseEntity.ok(response);
     }
 
 
     public ResponseEntity<?> update(TierDtoReq tierDtoReq, Long aLong) {
-
-        return ResponseEntity.ok(tierService.update(tierDtoReq, aLong));
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", tierService.update(tierDtoReq, aLong));
+        response.put("message", "Tier updated successfully");
+        return ResponseEntity.ok(response);
     }
 
 
     public ResponseEntity<?> delete(Long aLong) {
-
         return ResponseEntity.ok(tierService.delete(aLong));
     }
 

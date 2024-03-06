@@ -13,6 +13,6 @@ public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String src;
-    @OneToOne
+    @ManyToOne
     private Pack pack;
 }
