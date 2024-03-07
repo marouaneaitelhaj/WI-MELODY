@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.wimelody.dto.payment.PaymentDtoReq;
 import org.example.wimelody.services.inter.PaymentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,32 +16,33 @@ public class PaymentController  {
 
     private final PaymentService paymentService;
 
-    public ResponseEntity<?> save(PaymentDtoReq paymentDtoReq) {
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody PaymentDtoReq paymentDtoReq) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", paymentService.save(paymentDtoReq));
         response.put("message", "Payment created successfully");
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> update(PaymentDtoReq paymentDtoReq, Long aLong) {
+    @PutMapping("/{aLong}")
+    public ResponseEntity<?> update(@RequestBody PaymentDtoReq paymentDtoReq, @PathVariable Long aLong) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", paymentService.update(paymentDtoReq, aLong));
         response.put("message", "Payment updated successfully");
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> delete(Long aLong) {
+    @DeleteMapping("/{aLong}")
+    public ResponseEntity<?> delete(@PathVariable Long aLong) {
         return ResponseEntity.ok(paymentService.delete(aLong));
     }
 
-
-    public ResponseEntity<?> findById(Long aLong) {
+    @GetMapping("/{aLong}")
+    public ResponseEntity<?> findById(@PathVariable Long aLong) {
         return ResponseEntity.ok(paymentService.findById(aLong));
     }
 
-
+@GetMapping
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(paymentService.findAll());
     }

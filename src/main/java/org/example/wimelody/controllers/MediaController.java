@@ -5,8 +5,7 @@ import org.example.wimelody.dto.media.MediaDtoReq;
 import org.example.wimelody.dto.media.MediaDtoRsp;
 import org.example.wimelody.services.inter.MediaService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,38 +19,36 @@ public class MediaController  {
     private final MediaService mediaService;
 
     public ResponseEntity<?> save(MediaDtoReq mediaDtoReq) {
-
         Map<String, Object> response = new HashMap<>();
         response.put("data", mediaService.save(mediaDtoReq));
         response.put("message", "Media created successfully");
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> update(MediaDtoReq mediaDtoReq, Long aLong) {
+@PutMapping("/{media_id}")
+    public ResponseEntity<?> update(MediaDtoReq mediaDtoReq, @PathVariable Long media_id) {
         Map<String, Object> response = new HashMap<>();
-        response.put("data", mediaService.update(mediaDtoReq, aLong));
+        response.put("data", mediaService.update(mediaDtoReq, media_id));
         response.put("message", "Media updated successfully");
         return ResponseEntity.ok(response);
-
     }
 
-
-    public ResponseEntity<?> delete(Long aLong) {
+    @DeleteMapping("/{media_id}")
+    public ResponseEntity<?> delete(@PathVariable Long media_id) {
 
         Map<String, Object> response = new HashMap<>();
-        response.put("data", mediaService.delete(aLong));
+        response.put("data", mediaService.delete(media_id));
         response.put("message", "Media deleted successfully");
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{media_id}")
+    public ResponseEntity<?> findById(@PathVariable Long media_id) {
 
-    public ResponseEntity<?> findById(Long aLong) {
-
-        return ResponseEntity.ok(mediaService.findById(aLong));
+        return ResponseEntity.ok(mediaService.findById(media_id));
     }
 
-
+    @GetMapping
     public List<MediaDtoRsp> findAll() {
 
         return mediaService.findAll();

@@ -41,13 +41,13 @@ public class ArtistRequestsController  {
         return ResponseEntity.ok(response);
     }
 
-
+    @GetMapping("/{artistRequests_id}")
     public ResponseEntity<?> findById(@PathVariable Long artistRequests_id) {
 
         return ResponseEntity.ok(artistRequestsService.findById(artistRequests_id));
     }
 
-
+    @GetMapping
     public List<ArtistRequestsService> findAll() {
 
         return artistRequestsService.findAll();

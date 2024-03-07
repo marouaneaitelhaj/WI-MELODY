@@ -5,10 +5,7 @@ import org.example.wimelody.dto.tier.TierDtoReq;
 import org.example.wimelody.dto.tier.TierDtoRsp;
 import org.example.wimelody.services.inter.TierService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,26 +26,26 @@ public class TierController  {
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> update(TierDtoReq tierDtoReq, Long aLong) {
+    @PutMapping("/{aLong}")
+    public ResponseEntity<?> update(@RequestBody TierDtoReq tierDtoReq, @PathVariable Long aLong) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", tierService.update(tierDtoReq, aLong));
         response.put("message", "Tier updated successfully");
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> delete(Long aLong) {
+    @DeleteMapping("/{aLong}")
+    public ResponseEntity<?> delete(@PathVariable Long aLong) {
         return ResponseEntity.ok(tierService.delete(aLong));
     }
 
-
-    public ResponseEntity<?> findById(Long aLong) {
+    @GetMapping("/{aLong}")
+    public ResponseEntity<?> findById(@PathVariable Long aLong) {
 
         return ResponseEntity.ok(tierService.findById(aLong));
     }
 
-
+    @GetMapping
     public List<TierDtoRsp> findAll() {
 
         return tierService.findAll();

@@ -27,8 +27,8 @@ public class PackController  {
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> update(PackDtoReq packDtoReq, Long aLong) {
+    @PutMapping("/{aLong}")
+    public ResponseEntity<?> update(@RequestBody PackDtoReq packDtoReq, @PathVariable Long aLong) {
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", packService.update(packDtoReq, aLong));
@@ -36,8 +36,8 @@ public class PackController  {
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> delete(Long aLong) {
+    @DeleteMapping("/{aLong}")
+    public ResponseEntity<?> delete(@PathVariable Long aLong) {
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", packService.delete(aLong));
@@ -45,8 +45,8 @@ public class PackController  {
         return ResponseEntity.ok(response);
     }
 
-
-    public ResponseEntity<?> findById(Long aLong) {
+    @GetMapping("/{aLong}")
+    public ResponseEntity<?> findById(@PathVariable Long aLong) {
 
         return ResponseEntity.ok(packService.findById(aLong));
     }
