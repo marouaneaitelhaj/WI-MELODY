@@ -5,7 +5,9 @@ import java.util.List;
 import org.example.wimelody.dto.media.MediaDtoReq;
 import org.example.wimelody.dto.media.MediaDtoRsp;
 import org.example.wimelody.services.inter.MediaService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MediaServiceImpl implements MediaService {
 
     @Override
