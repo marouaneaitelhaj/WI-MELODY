@@ -5,6 +5,7 @@ import org.example.wimelody.dto.media.MediaDtoReq;
 import org.example.wimelody.dto.media.MediaDtoRsp;
 import org.example.wimelody.services.inter.MediaService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,7 +19,8 @@ public class MediaController  {
 
     private final MediaService mediaService;
 
-    public ResponseEntity<?> save(MediaDtoReq mediaDtoReq) {
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody List<MediaDtoReq> mediaDtoReq) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", mediaService.save(mediaDtoReq));
         response.put("message", "Media created successfully");
@@ -46,6 +48,12 @@ public class MediaController  {
     public ResponseEntity<?> findById(@PathVariable Long media_id) {
 
         return ResponseEntity.ok(mediaService.findById(media_id));
+    }
+
+    @GetMapping("/pack/{id}")
+    @PreAuthorize("hasRole('ROLE_ARTIST')")
+    public List<MediaDtoRsp> findAllByPack(@PathVariable Long id) {
+        return mediaService.findAllByPack(id);
     }
 
     @GetMapping

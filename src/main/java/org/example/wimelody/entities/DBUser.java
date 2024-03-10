@@ -41,6 +41,7 @@ public class DBUser   implements UserDetails {
         return role.getAuthorities();
     }
 
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
