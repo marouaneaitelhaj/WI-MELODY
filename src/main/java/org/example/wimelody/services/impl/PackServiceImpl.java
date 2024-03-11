@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -59,7 +60,7 @@ public class PackServiceImpl implements PackService {
     }
 
     @Override
-    public List<PackDtoRsp> findAllByTier(Long id) {
+    public List<PackDtoRsp> findAllByTier(UUID id) {
         Tier tier = tierRepository.findById(id).orElseThrow(() -> new NotFoundEx("Tier not found"));
         return packRepository.findAllByTierId(id).stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList();
     }

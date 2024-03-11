@@ -8,10 +8,13 @@ import org.example.wimelody.entities.Tier;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
+
 @Data
 public class PackDtoReq {
     private String name;
     private String description;
     private LocalDateTime date;
-    private Long tier_id;
+    private String cover;
+    private UUID tier_id;
 }

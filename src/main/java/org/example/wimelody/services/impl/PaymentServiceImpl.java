@@ -31,6 +31,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentDtoRsp save(PaymentDtoReq dtoMini) {
+        return getPaymentDtoRsp(dtoMini);
+    }
+
+    private PaymentDtoRsp getPaymentDtoRsp(PaymentDtoReq dtoMini) {
         Tier tier = tierRepository.findById(dtoMini.getTier_id()).orElseThrow(
                 () -> new NotFoundEx("Tier not found"));
         DBUser dbUser = dbUserRepository.findById(dtoMini.getFan_id()).orElseThrow(
@@ -46,15 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDtoRsp update(PaymentDtoReq dtoMini, Long f) {
         paymentRepository.findById(f).orElseThrow(
                 () -> new NotFoundEx("Payment not found"));
-        Tier tier = tierRepository.findById(dtoMini.getTier_id()).orElseThrow(
-                () -> new NotFoundEx("Tier not found"));
-        DBUser dbUser = dbUserRepository.findById(dtoMini.getFan_id()).orElseThrow(
-                () -> new NotFoundEx("DBUser not found"));
-        Payment payment = modelMapper.map(dtoMini, Payment.class);
-        payment.setTier(tier);
-        payment.setDate(LocalDateTime.now());
-        payment.setFan(dbUser);
-        return modelMapper.map(paymentRepository.save(payment), PaymentDtoRsp.class);
+        return getPaymentDtoRsp(dtoMini);
     }
 
     @Override

@@ -5,11 +5,13 @@ import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
 import org.example.wimelody.services.inter.PackService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/pack")
@@ -20,6 +22,7 @@ public class PackController  {
     private final PackService packService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ARTIST')")
     public ResponseEntity<?> save(@RequestBody PackDtoReq packDtoReq) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", packService.save(packDtoReq));
@@ -28,6 +31,7 @@ public class PackController  {
     }
 
     @PutMapping("/{aLong}")
+    @PreAuthorize("hasRole('ROLE_ARTIST')")
     public ResponseEntity<?> update(@RequestBody PackDtoReq packDtoReq, @PathVariable Long aLong) {
 
         Map<String, Object> response = new HashMap<>();
@@ -37,6 +41,7 @@ public class PackController  {
     }
 
     @DeleteMapping("/{aLong}")
+    @PreAuthorize("hasRole('ROLE_ARTIST')")
     public ResponseEntity<?> delete(@PathVariable Long aLong) {
 
         Map<String, Object> response = new HashMap<>();
@@ -57,7 +62,7 @@ public class PackController  {
     }
 
     @GetMapping("/tier/{id}")
-    private List<PackDtoRsp> findAllByTier(@PathVariable String id) {
-        return packService.findAllByTier(Long.parseLong(id));
+    private List<PackDtoRsp> findAllByTier(@PathVariable UUID id) {
+        return packService.findAllByTier(id);
     }
 }

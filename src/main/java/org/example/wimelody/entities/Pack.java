@@ -19,6 +19,7 @@ public class Pack {
     private String name;
     private String description;
     private LocalDateTime date;
+    private String cover;
     @OneToMany(mappedBy = "pack")
     private List<Media> media;
     @ManyToOne

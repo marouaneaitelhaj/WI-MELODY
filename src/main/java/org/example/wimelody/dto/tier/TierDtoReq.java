@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 public class TierDtoReq {
-    private Long id;
+    private UUID id;
     @NotNull
     private String name;
     @NotNull

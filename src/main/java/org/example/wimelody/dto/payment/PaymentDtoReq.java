@@ -14,7 +14,7 @@ import java.util.UUID;
 public class PaymentDtoReq {
     private Long id;
     private LocalDateTime date;
-    private Long tier_id;
+    private UUID tier_id;
 
     private UUID fan_id;
 }

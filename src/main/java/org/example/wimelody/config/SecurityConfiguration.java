@@ -26,8 +26,8 @@ public class SecurityConfiguration {
             "/api/v1/auth/**",
             "/api/v1/artists/**",
             "/api/v1/pack/**",
+            "/api/v1/tier/**",
             "/api/v1/media/**",
-            "/api/v1/media/pack/**",
     };
 
     @Bean

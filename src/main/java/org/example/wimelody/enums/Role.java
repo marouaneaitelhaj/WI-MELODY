@@ -14,6 +14,7 @@ public enum Role {
     public List<SimpleGrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        System.out.println("authorities = " + authorities);
         return authorities;
     }
 

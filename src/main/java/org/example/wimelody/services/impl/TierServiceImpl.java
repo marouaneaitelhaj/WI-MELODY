@@ -1,6 +1,7 @@
 package org.example.wimelody.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.tier.TierDtoReq;
@@ -25,6 +26,8 @@ public class TierServiceImpl implements TierService {
 
     private final ModelMapper modelMapper;
 
+    private final DBUserRepository userRepository;
+
     @Override
     public TierDtoRsp save(TierDtoReq dtoMini) {
         DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
@@ -38,26 +41,29 @@ public class TierServiceImpl implements TierService {
     }
 
     @Override
-    public TierDtoRsp update(TierDtoReq dtoMini, Long f) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public TierDtoRsp update(TierDtoReq dtoMini, UUID f) {
+        DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
+                .orElseThrow(() -> new NotFoundEx("Artist not found"));
+        Tier tier = tierRepository.findById(f).orElseThrow(() -> new NotFoundEx("Tier not found"));
+        tier = modelMapper.map(dtoMini, Tier.class);
+        tier.setArtist(artist);
+        return modelMapper.map(tierRepository.save(tier), TierDtoRsp.class);
     }
 
     @Override
-    public Boolean delete(Long f) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public Boolean delete(UUID f) {
+        Tier tier = tierRepository.findById(f).orElseThrow(() -> new NotFoundEx("Tier not found"));
+        tierRepository.delete(tier);
+        return true;
     }
 
     @Override
-    public TierDtoRsp findById(Long f) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findOne'");
+    public TierDtoRsp findById(UUID f) {
+        return modelMapper.map(tierRepository.findById(f).orElseThrow(() -> new NotFoundEx("Tier not found")), TierDtoRsp.class);
     }
 
     @Override
     public List<TierDtoRsp> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return tierRepository.findAll().stream().map(tier -> modelMapper.map(tier, TierDtoRsp.class)).toList();
     }
 }

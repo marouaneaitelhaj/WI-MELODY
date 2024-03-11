@@ -1,6 +1,7 @@
 package org.example.wimelody.dto.tier;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.example.wimelody.dto.pack.PackDtoForTier;
 import org.example.wimelody.entities.Pack;
@@ -14,9 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TierDtoRsp {
-    private Long id;
+    private UUID id;
     private String name;
     private String description;
     private Double price;
-    private List<PackDtoForTier> packs;
+    //private List<PackDtoForTier> packs;
 }

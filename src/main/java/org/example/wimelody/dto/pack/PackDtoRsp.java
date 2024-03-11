@@ -8,5 +8,6 @@ public class PackDtoRsp {
     private Long id;
     private String name;
     private String description;
+    private String cover;
     private LocalDateTime date;
 }

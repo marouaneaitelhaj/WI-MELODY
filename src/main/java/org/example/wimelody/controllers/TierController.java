@@ -5,11 +5,13 @@ import org.example.wimelody.dto.tier.TierDtoReq;
 import org.example.wimelody.dto.tier.TierDtoRsp;
 import org.example.wimelody.services.inter.TierService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/tier")
@@ -27,7 +29,7 @@ public class TierController  {
     }
 
     @PutMapping("/{aLong}")
-    public ResponseEntity<?> update(@RequestBody TierDtoReq tierDtoReq, @PathVariable Long aLong) {
+    public ResponseEntity<?> update(@RequestBody TierDtoReq tierDtoReq, @PathVariable UUID aLong) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", tierService.update(tierDtoReq, aLong));
         response.put("message", "Tier updated successfully");
@@ -35,13 +37,13 @@ public class TierController  {
     }
 
     @DeleteMapping("/{aLong}")
-    public ResponseEntity<?> delete(@PathVariable Long aLong) {
+    public ResponseEntity<?> delete(@PathVariable UUID aLong) {
         return ResponseEntity.ok(tierService.delete(aLong));
     }
 
     @GetMapping("/{aLong}")
-    public ResponseEntity<?> findById(@PathVariable Long aLong) {
-
+    @PreAuthorize("hasAnyAuthority('ROLE_FAN')")
+    public ResponseEntity<?> findById(@PathVariable UUID aLong) {
         return ResponseEntity.ok(tierService.findById(aLong));
     }
 

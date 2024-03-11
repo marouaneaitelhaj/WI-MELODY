@@ -5,7 +5,8 @@ import org.example.wimelody.dto.pack.PackDtoRsp;
 import org.example.wimelody.services.BaseService;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface PackService extends BaseService<PackDtoRsp, PackDtoReq, Long> {
-    List<PackDtoRsp> findAllByTier(Long id);
+    List<PackDtoRsp> findAllByTier(UUID id);
 }
