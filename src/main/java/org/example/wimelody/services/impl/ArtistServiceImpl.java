@@ -2,11 +2,15 @@ package org.example.wimelody.services.impl;
 
 import lombok.AllArgsConstructor;
 
+import org.example.wimelody.dto.tier.TierDtoReqWithSubscribed;
 import org.example.wimelody.dto.user.UserDtoReq;
 import org.example.wimelody.dto.user.UserDtoRsp;
+import org.example.wimelody.entities.Payment;
+import org.example.wimelody.entities.Tier;
 import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.DBUserRepository;
+import org.example.wimelody.repositories.PaymentRepository;
 import org.example.wimelody.services.inter.ArtistService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,8 @@ public class ArtistServiceImpl implements ArtistService {
 
     private final DBUserRepository artistRepository;
     private final ModelMapper modelMapper;
+
+    private final PaymentRepository paymentRepository;
 
     @Override
     public UserDtoRsp save(UserDtoReq dtoMini) {
@@ -43,6 +49,22 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public UserDtoRsp findById(UUID f) {
         return modelMapper.map(artistRepository.findByIdAndRole(f, Role.ARTIST).orElseThrow(() -> new NotFoundEx("Artist Not Found")), UserDtoRsp.class);
+    }
+
+    @Override
+    public UserDtoRsp findById(UUID f, UserDtoRsp userDtoRsp) {
+        List<Payment> payments = paymentRepository.findAllByFanId(userDtoRsp.getId());
+        List<TierDtoReqWithSubscribed> tiers = payments.stream().map(Payment::getTier).toList().stream().map(tier -> modelMapper.map(tier, TierDtoReqWithSubscribed.class)).toList();
+        UserDtoRsp artist = modelMapper.map(artistRepository.findByIdAndRole(f, Role.ARTIST).orElseThrow(() -> new NotFoundEx("Artist Not Found")), UserDtoRsp.class);
+        List<TierDtoReqWithSubscribed> tierDtoReqWithSubscribeds = artist.getTiers();
+        for (TierDtoReqWithSubscribed tierDtoReqWithSubscribed : tierDtoReqWithSubscribeds) {
+            for (TierDtoReqWithSubscribed tier : tiers) {
+                if (tierDtoReqWithSubscribed.getId().equals(tier.getId())) {
+                    tierDtoReqWithSubscribed.setSubscribed(true);
+                }
+            }
+        }
+        return artist;
     }
 
     @Override

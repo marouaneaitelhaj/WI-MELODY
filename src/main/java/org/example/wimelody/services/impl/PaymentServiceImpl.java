@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -73,4 +74,10 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findAll().stream().map(
                 payment -> modelMapper.map(payment, PaymentDtoRsp.class)).toList();
     }
+
+    @Override
+    public boolean checkSubscription(UUID fanId, UUID tierId) {
+        List<Payment> payment = paymentRepository.findAllByFanIdAndTierId(fanId, tierId);
+        return !payment.isEmpty();
+    }   
 }

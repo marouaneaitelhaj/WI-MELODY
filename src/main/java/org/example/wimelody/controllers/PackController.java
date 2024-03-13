@@ -3,11 +3,14 @@ package org.example.wimelody.controllers;
 import lombok.RequiredArgsConstructor;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
+import org.example.wimelody.dto.user.UserDtoRsp;
+import org.example.wimelody.services.impl.AuthenticationService;
 import org.example.wimelody.services.inter.PackService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,8 @@ public class PackController  {
 
 
     private final PackService packService;
+
+    private final AuthenticationService authenticationService;
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ARTIST')")
@@ -57,12 +62,16 @@ public class PackController  {
     }
 
     @GetMapping
-    public List<PackDtoRsp> findAll() {
-        return packService.findAll();
+    @PreAuthorize("hasRole('ROLE_FAN') or hasRole('ROLE_ARTIST')")
+    public List<PackDtoRsp> findAll(Principal principal) {
+        UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
+        return packService.findAll(userDtoRsp);
     }
 
     @GetMapping("/tier/{id}")
     private List<PackDtoRsp> findAllByTier(@PathVariable UUID id) {
         return packService.findAllByTier(id);
     }
+
+
 }

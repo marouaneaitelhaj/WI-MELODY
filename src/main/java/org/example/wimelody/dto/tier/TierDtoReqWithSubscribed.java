@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class TierDtoReq {
+public class TierDtoReqWithSubscribed {
     private UUID id;
     @NotNull
     private String name;
@@ -16,4 +16,6 @@ public class TierDtoReq {
     private Double price;
     @NotNull
     private UUID artist_id;
+
+    private boolean subscribed;
 }

@@ -3,10 +3,14 @@ package org.example.wimelody.services.impl;
 import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
+import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.Pack;
+import org.example.wimelody.entities.Payment;
 import org.example.wimelody.entities.Tier;
+import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.PackRepository;
+import org.example.wimelody.repositories.PaymentRepository;
 import org.example.wimelody.repositories.TierRepository;
 import org.example.wimelody.services.inter.PackService;
 import org.modelmapper.ModelMapper;
@@ -21,6 +25,8 @@ import java.util.UUID;
 public class PackServiceImpl implements PackService {
 
     private final PackRepository packRepository;
+
+    private final PaymentRepository paymentRepository;
     private final TierRepository tierRepository;
 
     private final ModelMapper modelMapper;
@@ -55,7 +61,19 @@ public class PackServiceImpl implements PackService {
 
     @Override
     public List<PackDtoRsp> findAll() {
-        List<Pack> packs = packRepository.findAll();
+        return null;
+    }
+
+    @Override
+    public List<PackDtoRsp> findAll(UserDtoRsp userDtoRsp) {
+        List<Pack> packs = null;
+        if (userDtoRsp.getRole() == Role.FAN) {
+            List<Payment> payments = paymentRepository.findAllByFanId(userDtoRsp.getId());
+            List<Tier> tiers = payments.stream().map(Payment::getTier).toList();
+            packs = tiers.stream().map(Tier::getPacks).flatMap(List::stream).toList();
+        } else if (userDtoRsp.getRole() == Role.ARTIST) {
+            packs = packRepository.findAll();
+        }
         return packs.stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList();
     }
 

@@ -8,5 +8,6 @@ import org.example.wimelody.services.BaseService;
 import java.util.UUID;
 
 public interface ArtistService extends BaseService<UserDtoRsp, UserDtoReq, UUID> {
-    
+
+    UserDtoRsp findById(UUID f, UserDtoRsp userDtoRsp);
 }

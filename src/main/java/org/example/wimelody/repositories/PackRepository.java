@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface PackRepository extends JpaRepository<Pack, Long> {
     List<Pack> findAllByTierId(UUID id);
+
 }
