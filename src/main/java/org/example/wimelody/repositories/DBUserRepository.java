@@ -15,6 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DBUserRepository extends JpaRepository<DBUser, UUID> {
     Optional<DBUser> findByUsername(String username);
     List<DBUser> findAllByRole(Role role);
-    Page<DBUser> findAllByRole(Role role, Pageable pageable);
+    Page<DBUser> findAllByRoleAndUsernameContainingIgnoreCase(Role role, String text, Pageable pageable);
     Optional<DBUser> findByIdAndRole(UUID id, Role role);
 }

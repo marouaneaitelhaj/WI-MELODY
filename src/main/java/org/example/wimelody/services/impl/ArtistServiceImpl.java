@@ -74,8 +74,8 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Page<UserDtoRsp> findAll(Pageable pageable) {
-        Page<DBUser> dbUsers = artistRepository.findAllByRole(Role.ARTIST, pageable);
+    public Page<UserDtoRsp> findAll(Pageable pageable, String text) {
+        Page<DBUser> dbUsers = artistRepository.findAllByRoleAndUsernameContainingIgnoreCase(Role.ARTIST, text, pageable);
         return dbUsers.map(dbUser -> modelMapper.map(dbUser, UserDtoRsp.class));
     }
     
