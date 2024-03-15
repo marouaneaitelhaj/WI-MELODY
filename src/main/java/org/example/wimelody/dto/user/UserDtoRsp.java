@@ -28,4 +28,6 @@ public class UserDtoRsp {
 
     private List<TierDtoReqWithSubscribed> tiers;
 
+    private  boolean alreadyRequested;
+
 }

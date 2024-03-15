@@ -24,6 +24,7 @@ public class ArtistRequestsController  {
         return ResponseEntity.ok(response);
     }
 
+
     @PostMapping("/reject/{artistRequests_id}")
     public ResponseEntity<?> reject(@PathVariable Long artistRequests_id) {
         Map<String, Object> response = new HashMap<>();
@@ -48,8 +49,7 @@ public class ArtistRequestsController  {
     }
 
     @GetMapping
-    public List<ArtistRequestsService> findAll() {
-
+    public List<?> findAll() {
         return artistRequestsService.findAll();
     }
 }

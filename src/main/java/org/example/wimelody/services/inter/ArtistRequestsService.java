@@ -10,5 +10,5 @@ public interface ArtistRequestsService {
     ArtistRequests reject(Long artistRequests_id);
     ArtistRequests approve(Long artistRequests_id);
     ArtistRequests findById(Long artistRequests_id);
-    List<ArtistRequestsService> findAll();
+    List<ArtistRequests> findAll();
 }

@@ -1,18 +1,19 @@
 package org.example.wimelody.services.impl;
 
 import lombok.AllArgsConstructor;
-
 import org.example.wimelody.dto.tier.TierDtoReqWithSubscribed;
 import org.example.wimelody.dto.user.UserDtoReq;
 import org.example.wimelody.dto.user.UserDtoRsp;
+import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.entities.Payment;
-import org.example.wimelody.entities.Tier;
 import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.DBUserRepository;
 import org.example.wimelody.repositories.PaymentRepository;
 import org.example.wimelody.services.inter.ArtistService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,6 +71,12 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public List<UserDtoRsp> findAll() {
         return artistRepository.findAllByRole(Role.ARTIST).stream().map(artist -> modelMapper.map(artist, UserDtoRsp.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<UserDtoRsp> findAll(Pageable pageable) {
+        Page<DBUser> dbUsers = artistRepository.findAllByRole(Role.ARTIST, pageable);
+        return dbUsers.map(dbUser -> modelMapper.map(dbUser, UserDtoRsp.class));
     }
     
 }

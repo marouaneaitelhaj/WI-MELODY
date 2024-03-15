@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.wimelody.config.JwtService;
 import org.example.wimelody.dto.user.UserDtoRsp;
+import org.example.wimelody.entities.ArtistRequests;
 import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
+import org.example.wimelody.repositories.ArtistRequestsRepository;
 import org.example.wimelody.repositories.DBUserRepository;
 import org.example.wimelody.reqrsp.AuthenticationRequest;
 import org.example.wimelody.reqrsp.AuthenticationResponse;
@@ -28,6 +30,8 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 
 
     private PasswordEncoder passwordEncoder;
+
+    private final ArtistRequestsRepository artistRequestsRepository;
 
     private final ModelMapper modelMapper;
 
@@ -69,6 +73,9 @@ public class AuthenticationService implements AuthenticationServiceInterface {
     @Override
     public UserDtoRsp getUser(String name) {
         DBUser user = userRepository.findByUsername(name).orElseThrow(() -> new NotFoundEx("User not found"));
-        return modelMapper.map(user, UserDtoRsp.class);
+        ArtistRequests artistRequests = artistRequestsRepository.findByFan(user).orElse(null);
+        UserDtoRsp userDtoRsp = modelMapper.map(user, UserDtoRsp.class);
+        userDtoRsp.setAlreadyRequested(artistRequests != null);
+        return userDtoRsp;
     }
 }
