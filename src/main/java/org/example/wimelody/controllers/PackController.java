@@ -1,5 +1,6 @@
 package org.example.wimelody.controllers;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
@@ -57,7 +58,6 @@ public class PackController  {
 
     @GetMapping("/{aLong}")
     public ResponseEntity<?> findById(@PathVariable Long aLong) {
-
         return ResponseEntity.ok(packService.findById(aLong));
     }
 
@@ -65,11 +65,20 @@ public class PackController  {
     @PreAuthorize("hasRole('ROLE_FAN') or hasRole('ROLE_ARTIST')")
     public List<PackDtoRsp> findAll(Principal principal) {
         UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
+        System.out.println(userDtoRsp);
         return packService.findAll(userDtoRsp);
     }
 
+
+    @GetMapping("/artist/{id}")
+    @PreAuthorize("hasRole('ROLE_FAN')")
+    public List<PackDtoRsp> findAllByArtist(Principal principal, @PathVariable UUID id) {
+        UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
+        return packService.findAllByArtist(id, userDtoRsp);
+    }
+
     @GetMapping("/tier/{id}")
-    private List<PackDtoRsp> findAllByTier(@PathVariable UUID id) {
+    public List<PackDtoRsp> findAllByTier(@PathVariable UUID id) {
         return packService.findAllByTier(id);
     }
 

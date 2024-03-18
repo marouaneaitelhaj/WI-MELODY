@@ -22,4 +22,6 @@ public class Tier {
     private List<Pack> packs;
     @ManyToOne
     private DBUser artist;
+    @OneToMany
+    private List<Payment> payments;
 }

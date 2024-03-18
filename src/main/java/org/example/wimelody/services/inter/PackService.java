@@ -12,4 +12,6 @@ public interface PackService extends BaseService<PackDtoRsp, PackDtoReq, Long> {
     List<PackDtoRsp> findAll(UserDtoRsp userDtoRsp);
 
     List<PackDtoRsp> findAllByTier(UUID id);
+
+    List<PackDtoRsp> findAllByArtist(UUID id, UserDtoRsp userDtoRsp);
 }

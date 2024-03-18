@@ -3,9 +3,9 @@ package org.example.wimelody.services.impl;
 import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
+import org.example.wimelody.dto.tier.TierDtoReqWithSubscribed;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.Pack;
-import org.example.wimelody.entities.Payment;
 import org.example.wimelody.entities.Tier;
 import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
@@ -68,12 +68,11 @@ public class PackServiceImpl implements PackService {
     public List<PackDtoRsp> findAll(UserDtoRsp userDtoRsp) {
         List<Pack> packs = null;
         if (userDtoRsp.getRole() == Role.FAN) {
-            List<Payment> payments = paymentRepository.findAllByFanId(userDtoRsp.getId());
-            List<Tier> tiers = payments.stream().map(Payment::getTier).toList();
-            packs = tiers.stream().map(Tier::getPacks).flatMap(List::stream).toList();
+            packs = packRepository.findAllByFanId(userDtoRsp.getId());
         } else if (userDtoRsp.getRole() == Role.ARTIST) {
-            packs = packRepository.findAll();
+            packs = packRepository.findAllByTierArtistId(userDtoRsp.getId());
         }
+        assert packs != null;
         return packs.stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList();
     }
 
@@ -81,5 +80,10 @@ public class PackServiceImpl implements PackService {
     public List<PackDtoRsp> findAllByTier(UUID id) {
         Tier tier = tierRepository.findById(id).orElseThrow(() -> new NotFoundEx("Tier not found"));
         return packRepository.findAllByTierId(id).stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList();
+    }
+
+    @Override
+    public List<PackDtoRsp> findAllByArtist(UUID id, UserDtoRsp userDtoRsp) {
+        List<TierDtoReqWithSubscribed> tiers = userDtoRsp.getTiers();   
     }
 }
