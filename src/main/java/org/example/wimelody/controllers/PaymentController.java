@@ -2,6 +2,7 @@ package org.example.wimelody.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.example.wimelody.dto.payment.PaymentDtoReq;
+import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.services.impl.AuthenticationService;
 import org.example.wimelody.services.inter.PaymentService;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +61,8 @@ public class PaymentController  {
     }
 
 @GetMapping
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(paymentService.findAll());
+public ResponseEntity<?> findAll(Principal principal) {
+    UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
+        return ResponseEntity.ok(paymentService.findAll(userDtoRsp));
     }
 }

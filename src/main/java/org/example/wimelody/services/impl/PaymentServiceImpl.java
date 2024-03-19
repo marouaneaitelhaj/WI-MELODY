@@ -3,6 +3,7 @@ package org.example.wimelody.services.impl;
 import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.payment.PaymentDtoReq;
 import org.example.wimelody.dto.payment.PaymentDtoRsp;
+import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.DBUser;
 import org.example.wimelody.entities.Payment;
 import org.example.wimelody.entities.Tier;
@@ -79,5 +80,11 @@ public class PaymentServiceImpl implements PaymentService {
     public boolean checkSubscription(UUID fanId, UUID tierId) {
         List<Payment> payment = paymentRepository.findAllByFanIdAndTierId(fanId, tierId);
         return !payment.isEmpty();
-    }   
+    }
+
+    @Override
+    public List<PaymentDtoRsp> findAll(UserDtoRsp userDtoRsp) {
+        List<Payment> payments = paymentRepository.findAllByFanId(userDtoRsp.getId());
+        return payments.stream().map(payment -> modelMapper.map(payment, PaymentDtoRsp.class)).toList();
+    }
 }

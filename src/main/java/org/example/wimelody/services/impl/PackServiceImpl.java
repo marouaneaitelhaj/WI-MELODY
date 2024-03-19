@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,6 +85,8 @@ public class PackServiceImpl implements PackService {
 
     @Override
     public List<PackDtoRsp> findAllByArtist(UUID id, UserDtoRsp userDtoRsp) {
-        List<TierDtoReqWithSubscribed> tiers = userDtoRsp.getTiers();   
+        List<TierDtoReqWithSubscribed> tiers = userDtoRsp.getTiers();
+        List<PackDtoRsp> packs = new ArrayList<>();
+        return  packs;
     }
 }
