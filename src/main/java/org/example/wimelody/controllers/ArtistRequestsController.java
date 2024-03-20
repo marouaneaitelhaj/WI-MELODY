@@ -35,7 +35,6 @@ public class ArtistRequestsController  {
 
     @PostMapping("/approve/{artistRequests_id}")
     public ResponseEntity<?> approve(@PathVariable Long artistRequests_id) {
-
         Map<String, Object> response = new HashMap<>();
         response.put("data", artistRequestsService.approve(artistRequests_id));
         response.put("message", "ArtistRequests approved successfully");

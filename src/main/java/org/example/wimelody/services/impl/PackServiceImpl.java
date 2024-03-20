@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
 import org.example.wimelody.dto.tier.TierDtoReqWithSubscribed;
+import org.example.wimelody.dto.tier.TierPacksDtoRsp;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.Pack;
+import org.example.wimelody.entities.Payment;
 import org.example.wimelody.entities.Tier;
 import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
@@ -28,6 +30,7 @@ public class PackServiceImpl implements PackService {
     private final PackRepository packRepository;
 
     private final PaymentRepository paymentRepository;
+
     private final TierRepository tierRepository;
 
     private final ModelMapper modelMapper;
@@ -85,8 +88,8 @@ public class PackServiceImpl implements PackService {
 
     @Override
     public List<PackDtoRsp> findAllByArtist(UUID id, UserDtoRsp userDtoRsp) {
-        List<TierDtoReqWithSubscribed> tiers = userDtoRsp.getTiers();
-        List<PackDtoRsp> packs = new ArrayList<>();
-        return  packs;
+        List<Payment> payments = paymentRepository.findAllByFanIdAndTierArtistId(userDtoRsp.getId(), id);
+        List<Tier> tiers = payments.stream().map(Payment::getTier).toList();
+        return tiers.stream().map(tier -> packRepository.findAllByTierId(tier.getId()).stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList()).toList().stream().flatMap(List::stream).toList();
     }
 }

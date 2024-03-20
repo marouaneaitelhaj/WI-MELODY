@@ -5,6 +5,7 @@ import org.example.wimelody.ArtistRequestsStatus;
 import org.example.wimelody.dto.artistRequests.ArtistRequestsReq;
 import org.example.wimelody.entities.ArtistRequests;
 import org.example.wimelody.entities.DBUser;
+import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.ArtistRequestsRepository;
 import org.example.wimelody.repositories.DBUserRepository;
@@ -46,6 +47,9 @@ public class ArtistRequestsServiceImpl implements ArtistRequestsService {
 
         ArtistRequests artistRequests = artistRequestsRepository.findById(artistRequests_id).orElseThrow(() -> new NotFoundEx("Artist Request not found"));
         artistRequests.setStatus(ArtistRequestsStatus.APPROVED);
+        DBUser artist = dbUserRepository.findById(artistRequests.getFan().getId()).orElseThrow(() -> new NotFoundEx("Artist not found"));
+        artist.setRole(Role.ARTIST);
+        dbUserRepository.save(artist);
         return artistRequestsRepository.save(artistRequests);
     }
 

@@ -12,4 +12,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     List<Payment> findAllByFanIdAndTierId(UUID fanId, UUID tierId);
 
     List<Payment> findAllByFanId(UUID fanId);
+
+    List<Payment> findAllByFanIdAndTierArtistId(UUID fanId, UUID artistId);
 }

@@ -73,7 +73,8 @@ public class AuthenticationService implements AuthenticationServiceInterface {
     @Override
     public UserDtoRsp getUser(String name) {
         DBUser user = userRepository.findByUsername(name).orElseThrow(() -> new NotFoundEx("User not found"));
-        ArtistRequests artistRequests = artistRequestsRepository.findByFan(user).orElse(null);
+        ArtistRequests artistRequests = artistRequestsRepository.findByFanId(user.getId()).orElse(null);
+        //System.out.println(artistRequests);
         UserDtoRsp userDtoRsp = modelMapper.map(user, UserDtoRsp.class);
         userDtoRsp.setAlreadyRequested(artistRequests != null);
         return userDtoRsp;

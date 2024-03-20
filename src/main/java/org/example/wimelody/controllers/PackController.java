@@ -7,6 +7,7 @@ import org.example.wimelody.dto.pack.PackDtoRsp;
 import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.services.impl.AuthenticationService;
 import org.example.wimelody.services.inter.PackService;
+import org.example.wimelody.services.inter.TierService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ public class PackController  {
 
 
     private final PackService packService;
+
+    private  final TierService tierService;
 
     private final AuthenticationService authenticationService;
 

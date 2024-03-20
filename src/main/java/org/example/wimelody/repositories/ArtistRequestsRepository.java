@@ -5,7 +5,8 @@ import org.example.wimelody.entities.DBUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ArtistRequestsRepository extends JpaRepository<ArtistRequests, Long> {
-    Optional<ArtistRequests> findByFan(DBUser user);
+    Optional<ArtistRequests> findByFanId(UUID fanId);
 }

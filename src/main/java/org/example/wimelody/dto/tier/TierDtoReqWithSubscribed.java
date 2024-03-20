@@ -17,5 +17,7 @@ public class TierDtoReqWithSubscribed {
     @NotNull
     private UUID artist_id;
 
+    private String cover;
+
     private boolean subscribed;
 }
