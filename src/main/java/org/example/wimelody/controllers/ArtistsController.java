@@ -35,9 +35,8 @@ public class ArtistsController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_FAN')")
-    public ResponseEntity<?> getArtist(@PathVariable UUID id, Principal principal) {
-        UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
-        return ResponseEntity.ok(artistService.findById(id, userDtoRsp));
+    public ResponseEntity<?> getArtist(@PathVariable UUID id) {
+        return ResponseEntity.ok(artistService.findById(id));
     }
 
 

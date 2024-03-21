@@ -1,6 +1,7 @@
 package org.example.wimelody.services.impl;
 
 import lombok.AllArgsConstructor;
+import org.example.wimelody.audit.SpringSecurityAuditAwareImpl;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
 import org.example.wimelody.dto.tier.TierDtoReqWithSubscribed;
@@ -33,6 +34,8 @@ public class PackServiceImpl implements PackService {
 
     private final TierRepository tierRepository;
 
+    private  final SpringSecurityAuditAwareImpl springSecurityAuditAware;
+
     private final ModelMapper modelMapper;
 
     @Override
@@ -47,8 +50,14 @@ public class PackServiceImpl implements PackService {
 
     @Override
     public PackDtoRsp update(PackDtoReq dtoMini, Long f) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        packRepository.findById(f).orElseThrow(() -> new NotFoundEx("Pack not found"));
+        Pack pack = modelMapper.map(dtoMini, Pack.class);
+        Tier tier = tierRepository.findById(dtoMini.getTier_id()).orElseThrow(() -> new NotFoundEx("Tier not found"));
+        pack.setTier(tier);
+        pack.setId(f);
+        pack.setDate(LocalDateTime.now());
+        pack = packRepository.save(pack);
+        return modelMapper.map(pack, PackDtoRsp.class);
     }
 
     @Override
@@ -63,18 +72,14 @@ public class PackServiceImpl implements PackService {
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }
 
-    @Override
-    public List<PackDtoRsp> findAll() {
-        return null;
-    }
 
     @Override
-    public List<PackDtoRsp> findAll(UserDtoRsp userDtoRsp) {
+    public List<PackDtoRsp> findAll() {
         List<Pack> packs = null;
-        if (userDtoRsp.getRole() == Role.FAN) {
-            packs = packRepository.findAllByFanId(userDtoRsp.getId());
-        } else if (userDtoRsp.getRole() == Role.ARTIST) {
-            packs = packRepository.findAllByTierArtistId(userDtoRsp.getId());
+        if (springSecurityAuditAware.getCurrentAuditor().getRole() == Role.FAN) {
+            packs = packRepository.findAllByFanId(springSecurityAuditAware.getCurrentAuditor().getId());
+        } else if (springSecurityAuditAware.getCurrentAuditor().getRole() == Role.ARTIST) {
+            packs = packRepository.findAllByTierArtistId(springSecurityAuditAware.getCurrentAuditor().getId());
         }
         assert packs != null;
         return packs.stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList();
@@ -87,8 +92,8 @@ public class PackServiceImpl implements PackService {
     }
 
     @Override
-    public List<PackDtoRsp> findAllByArtist(UUID id, UserDtoRsp userDtoRsp) {
-        List<Payment> payments = paymentRepository.findAllByFanIdAndTierArtistId(userDtoRsp.getId(), id);
+    public List<PackDtoRsp> findAllByArtist(UUID id) {
+        List<Payment> payments = paymentRepository.findAllByFanIdAndTierArtistId(springSecurityAuditAware.getCurrentAuditor().getId(), id);
         List<Tier> tiers = payments.stream().map(Payment::getTier).toList();
         return tiers.stream().map(tier -> packRepository.findAllByTierId(tier.getId()).stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList()).toList().stream().flatMap(List::stream).toList();
     }

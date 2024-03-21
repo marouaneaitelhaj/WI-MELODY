@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PackService extends BaseService<PackDtoRsp, PackDtoReq, Long> {
-    List<PackDtoRsp> findAll(UserDtoRsp userDtoRsp);
 
     List<PackDtoRsp> findAllByTier(UUID id);
 
-    List<PackDtoRsp> findAllByArtist(UUID id, UserDtoRsp userDtoRsp);
+    List<PackDtoRsp> findAllByArtist(UUID id);
 }

@@ -79,4 +79,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
         userDtoRsp.setAlreadyRequested(artistRequests != null);
         return userDtoRsp;
     }
+    public DBUser getUserDbUser(String name) {
+        return userRepository.findByUsername(name).orElseThrow(() -> new NotFoundEx("User not found"));
+    }
 }

@@ -13,7 +13,9 @@ public class TierDtoReq {
     @NotNull
     private String description;
     @NotNull
-    private Double price;
+    private String cover;
     @NotNull
-    private UUID artist_id;
+    private Double price;
+    //@NotNull
+    //private UUID artist_id;
 }

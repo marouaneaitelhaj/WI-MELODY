@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
+import org.example.wimelody.audit.SpringSecurityAuditAwareImpl;
 import org.example.wimelody.dto.tier.TierDtoReq;
 import org.example.wimelody.dto.tier.TierDtoRsp;
 import org.example.wimelody.entities.DBUser;
@@ -28,25 +29,27 @@ public class TierServiceImpl implements TierService {
 
     private final DBUserRepository userRepository;
 
+    private  final SpringSecurityAuditAwareImpl springSecurityAuditAware;
+
     @Override
     public TierDtoRsp save(TierDtoReq dtoMini) {
-        DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
-                .orElseThrow(() -> new NotFoundEx("Artist not found"));
+        //DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
+           //     .orElseThrow(() -> new NotFoundEx("Artist not found"));
         tierRepository.findByPrice(dtoMini.getPrice()).ifPresent(tier -> {
             throw new AlreadyExistsEx("Tier already exists");
         });
         Tier tier = modelMapper.map(dtoMini, Tier.class);
-        tier.setArtist(artist);
+        tier.setArtist(springSecurityAuditAware.getCurrentAuditor());
         return modelMapper.map(tierRepository.save(tier), TierDtoRsp.class);
     }
 
     @Override
     public TierDtoRsp update(TierDtoReq dtoMini, UUID f) {
-        DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
-                .orElseThrow(() -> new NotFoundEx("Artist not found"));
+       // DBUser artist = artistRepository.findById(dtoMini.getArtist_id())
+          //      .orElseThrow(() -> new NotFoundEx("Artist not found"));
         Tier tier = tierRepository.findById(f).orElseThrow(() -> new NotFoundEx("Tier not found"));
         tier = modelMapper.map(dtoMini, Tier.class);
-        tier.setArtist(artist);
+        tier.setArtist(springSecurityAuditAware.getCurrentAuditor());
         return modelMapper.map(tierRepository.save(tier), TierDtoRsp.class);
     }
 

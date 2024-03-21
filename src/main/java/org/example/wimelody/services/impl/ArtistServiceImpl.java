@@ -1,6 +1,7 @@
 package org.example.wimelody.services.impl;
 
 import lombok.AllArgsConstructor;
+import org.example.wimelody.audit.SpringSecurityAuditAwareImpl;
 import org.example.wimelody.dto.tier.TierDtoReqWithSubscribed;
 import org.example.wimelody.dto.user.UserDtoReq;
 import org.example.wimelody.dto.user.UserDtoRsp;
@@ -29,6 +30,8 @@ public class ArtistServiceImpl implements ArtistService {
 
     private final PaymentRepository paymentRepository;
 
+    private final SpringSecurityAuditAwareImpl springSecurityAuditAware;
+
     @Override
     public UserDtoRsp save(UserDtoReq dtoMini) {
         // TODO Auto-generated method stub
@@ -47,14 +50,11 @@ public class ArtistServiceImpl implements ArtistService {
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
-    @Override
-    public UserDtoRsp findById(UUID f) {
-        return modelMapper.map(artistRepository.findByIdAndRole(f, Role.ARTIST).orElseThrow(() -> new NotFoundEx("Artist Not Found")), UserDtoRsp.class);
-    }
+
 
     @Override
-    public UserDtoRsp findById(UUID f, UserDtoRsp userDtoRsp) {
-        List<Payment> payments = paymentRepository.findAllByFanId(userDtoRsp.getId());
+    public UserDtoRsp findById(UUID f) {
+        List<Payment> payments = paymentRepository.findAllByFanId(springSecurityAuditAware.getCurrentAuditor().getId());
         List<TierDtoReqWithSubscribed> tiers = payments.stream().map(Payment::getTier).toList().stream().map(tier -> modelMapper.map(tier, TierDtoReqWithSubscribed.class)).toList();
         UserDtoRsp artist = modelMapper.map(artistRepository.findByIdAndRole(f, Role.ARTIST).orElseThrow(() -> new NotFoundEx("Artist Not Found")), UserDtoRsp.class);
         List<TierDtoReqWithSubscribed> tierDtoReqWithSubscribeds = artist.getTiers();

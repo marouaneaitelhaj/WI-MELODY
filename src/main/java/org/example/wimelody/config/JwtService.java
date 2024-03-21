@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.example.wimelody.exceptions.GlobalExceptionHandler;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     private final GlobalExceptionHandler globalExceptionHandler;
+
 
     public String extractUsername(String jwt) {
             return extractClaim(jwt, Claims::getSubject);
@@ -57,7 +59,7 @@ public class JwtService {
                 .setClaims(exctraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 50))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

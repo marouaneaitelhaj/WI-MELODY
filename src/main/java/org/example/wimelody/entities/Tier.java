@@ -17,7 +17,7 @@ public class Tier {
     private String name;
     private String description;
     private Double price;
-    private Double monthlyPoints;
+    private String cover;
     @OneToMany(mappedBy = "tier")
     private List<Pack> packs;
     @ManyToOne

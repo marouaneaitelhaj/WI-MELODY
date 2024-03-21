@@ -11,7 +11,6 @@ import java.util.UUID;
 
 public interface ArtistService extends BaseService<UserDtoRsp, UserDtoReq, UUID> {
 
-    UserDtoRsp findById(UUID f, UserDtoRsp userDtoRsp);
 
     Page<UserDtoRsp> findAll(Pageable pageable, String text);
 }

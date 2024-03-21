@@ -1,6 +1,7 @@
 package org.example.wimelody.services.impl;
 
 import lombok.AllArgsConstructor;
+import org.example.wimelody.audit.SpringSecurityAuditAwareImpl;
 import org.example.wimelody.dto.payment.PaymentDtoReq;
 import org.example.wimelody.dto.payment.PaymentDtoRsp;
 import org.example.wimelody.dto.user.UserDtoRsp;
@@ -30,6 +31,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final DBUserRepository dbUserRepository;
 
     private final ModelMapper modelMapper;
+
+    private  final SpringSecurityAuditAwareImpl springSecurityAuditAware;
 
     @Override
     public PaymentDtoRsp save(PaymentDtoReq dtoMini) {
@@ -70,21 +73,16 @@ public class PaymentServiceImpl implements PaymentService {
         return modelMapper.map(payment, PaymentDtoRsp.class);
     }
 
-    @Override
-    public List<PaymentDtoRsp> findAll() {
-        return paymentRepository.findAll().stream().map(
-                payment -> modelMapper.map(payment, PaymentDtoRsp.class)).toList();
-    }
 
     @Override
-    public boolean checkSubscription(UUID fanId, UUID tierId) {
-        List<Payment> payment = paymentRepository.findAllByFanIdAndTierId(fanId, tierId);
+    public boolean checkSubscription(UUID tierId) {
+        List<Payment> payment = paymentRepository.findAllByFanIdAndTierId(springSecurityAuditAware.getCurrentAuditor().getId(), tierId);
         return !payment.isEmpty();
     }
 
     @Override
-    public List<PaymentDtoRsp> findAll(UserDtoRsp userDtoRsp) {
-        List<Payment> payments = paymentRepository.findAllByFanId(userDtoRsp.getId());
+    public List<PaymentDtoRsp> findAll() {
+        List<Payment> payments = paymentRepository.findAllByFanId(springSecurityAuditAware.getCurrentAuditor().getId());
         return payments.stream().map(payment -> modelMapper.map(payment, PaymentDtoRsp.class)).toList();
     }
 }

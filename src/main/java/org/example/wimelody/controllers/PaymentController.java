@@ -2,14 +2,12 @@ package org.example.wimelody.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.example.wimelody.dto.payment.PaymentDtoReq;
-import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.services.impl.AuthenticationService;
 import org.example.wimelody.services.inter.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -34,10 +32,9 @@ public class PaymentController  {
 
     @GetMapping("/check-subscription/{tier_id}")
     @PreAuthorize("hasAnyAuthority('ROLE_FAN')")
-    public ResponseEntity<?> checkSubscription(@PathVariable UUID tier_id, Principal principal) {
+    public ResponseEntity<?> checkSubscription(@PathVariable UUID tier_id) {
         Map<String, Object> response = new HashMap<>();
-        response.put("data", paymentService.checkSubscription(
-                authenticationService.getUser(principal.getName()).getId(), tier_id));
+        response.put("data", paymentService.checkSubscription(tier_id));
         response.put("message", "Subscription checked successfully");
         return ResponseEntity.ok(response);
     }
@@ -61,8 +58,7 @@ public class PaymentController  {
     }
 
 @GetMapping
-public ResponseEntity<?> findAll(Principal principal) {
-    UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
-        return ResponseEntity.ok(paymentService.findAll(userDtoRsp));
+public ResponseEntity<?> findAll() {
+    return ResponseEntity.ok(paymentService.findAll());
     }
 }

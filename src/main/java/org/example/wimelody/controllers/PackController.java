@@ -66,18 +66,15 @@ public class PackController  {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_FAN') or hasRole('ROLE_ARTIST')")
-    public List<PackDtoRsp> findAll(Principal principal) {
-        UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
-        System.out.println(userDtoRsp);
-        return packService.findAll(userDtoRsp);
+    public List<PackDtoRsp> findAll() {
+        return packService.findAll();
     }
 
 
     @GetMapping("/artist/{id}")
     @PreAuthorize("hasRole('ROLE_FAN')")
-    public List<PackDtoRsp> findAllByArtist(Principal principal, @PathVariable UUID id) {
-        UserDtoRsp userDtoRsp = authenticationService.getUser(principal.getName());
-        return packService.findAllByArtist(id, userDtoRsp);
+    public List<PackDtoRsp> findAllByArtist(@PathVariable UUID id) {
+        return packService.findAllByArtist(id);
     }
 
     @GetMapping("/tier/{id}")

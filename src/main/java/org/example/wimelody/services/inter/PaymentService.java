@@ -9,6 +9,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PaymentService extends BaseService<PaymentDtoRsp, PaymentDtoReq, Long> {
-    boolean checkSubscription(UUID fanId, UUID tierId);
-    List<PaymentDtoRsp> findAll(UserDtoRsp userDtoRsp);
+    boolean checkSubscription(UUID tierId);
 }
