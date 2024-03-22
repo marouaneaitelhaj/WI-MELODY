@@ -15,6 +15,10 @@ public class Like {
     private Long id;
     @ManyToOne
     private Pack pack;
+
+
     @ManyToOne
     private DBUser fan;
+
+
 }

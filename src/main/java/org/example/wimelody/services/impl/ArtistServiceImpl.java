@@ -10,6 +10,7 @@ import org.example.wimelody.entities.Payment;
 import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
 import org.example.wimelody.repositories.DBUserRepository;
+import org.example.wimelody.repositories.LikeRepository;
 import org.example.wimelody.repositories.PaymentRepository;
 import org.example.wimelody.services.inter.ArtistService;
 import org.modelmapper.ModelMapper;
@@ -27,6 +28,8 @@ public class ArtistServiceImpl implements ArtistService {
 
     private final DBUserRepository artistRepository;
     private final ModelMapper modelMapper;
+
+    private final LikeRepository likeRepository;
 
     private final PaymentRepository paymentRepository;
 
@@ -76,7 +79,13 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public Page<UserDtoRsp> findAll(Pageable pageable, String text) {
         Page<DBUser> dbUsers = artistRepository.findAllByRoleAndUsernameContainingIgnoreCase(Role.ARTIST, text, pageable);
-        return dbUsers.map(dbUser -> modelMapper.map(dbUser, UserDtoRsp.class));
+
+        Page<UserDtoRsp> userDtoRsps = dbUsers.map(dbUser -> modelMapper.map(dbUser, UserDtoRsp.class));
+
+        for (UserDtoRsp userDtoRsp : userDtoRsps) {
+            userDtoRsp.setLikes(likeRepository.countByPackArtistId(userDtoRsp.getId()));
+        }
+        return userDtoRsps;
     }
     
 }

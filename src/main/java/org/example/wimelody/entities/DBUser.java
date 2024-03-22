@@ -29,6 +29,7 @@ public class DBUser   implements UserDetails {
     private String email;
     private String password;
     private String profilePicture;
+    private String banner;
     @Enumerated(EnumType.STRING)
     private Role role;
 

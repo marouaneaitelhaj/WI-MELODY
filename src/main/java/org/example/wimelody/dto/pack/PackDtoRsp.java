@@ -12,4 +12,6 @@ public class PackDtoRsp {
     private String cover;
     private LocalDateTime date;
     private TierDtoReq tier;
+
+    private boolean liked;
 }

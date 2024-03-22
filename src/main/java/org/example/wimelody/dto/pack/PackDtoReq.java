@@ -12,9 +12,12 @@ import java.util.UUID;
 
 @Data
 public class PackDtoReq {
+    private Long id;
     private String name;
     private String description;
     private LocalDateTime date;
     private String cover;
     private UUID tier_id;
+
+    private boolean liked;
 }

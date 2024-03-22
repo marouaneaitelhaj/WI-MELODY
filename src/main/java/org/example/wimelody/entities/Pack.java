@@ -24,4 +24,7 @@ public class Pack {
     private List<Media> media;
     @ManyToOne
     private Tier tier;
+
+    @ManyToOne
+    private DBUser artist;
 }

@@ -3,6 +3,7 @@ package org.example.wimelody.services.impl;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import org.example.wimelody.audit.SpringSecurityAuditAwareImpl;
 import org.example.wimelody.dto.media.MediaDtoReq;
 import org.example.wimelody.dto.media.MediaDtoRsp;
 import org.example.wimelody.entities.Media;
@@ -23,6 +24,8 @@ public class MediaServiceImpl implements MediaService {
     private  final PackRepository packRepository;
 
     private final ModelMapper modelMapper;
+
+    private  final SpringSecurityAuditAwareImpl springSecurityAuditAwareImpl;
 
     @Override
     public MediaDtoRsp save(MediaDtoReq dtoMini) {
@@ -63,11 +66,14 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public List<MediaDtoRsp> findAllByPack(Long id) {
         Pack pack = packRepository.findById(id).orElseThrow(() -> new NotFoundEx("Pack not found"));
-        return mediaRepository.findAllByPack(pack).stream().map(m -> modelMapper.map(m, MediaDtoRsp.class)).toList();
+        List<Media> media = mediaRepository.findAllByPack(pack);
+        return media.stream().map(m -> modelMapper.map(m, MediaDtoRsp.class)).toList();
     }
 
     @Override
     public List<MediaDtoRsp> save(List<MediaDtoReq> mediaDtoReq) {
         return mediaDtoReq.stream().map(this::save).toList();
     }
+
+
 }

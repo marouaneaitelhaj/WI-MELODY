@@ -20,6 +20,8 @@ public class UserDtoRsp {
 
     private String username;
 
+    private String banner;
+
     private String email;
 
     private String profilePicture;
@@ -29,5 +31,7 @@ public class UserDtoRsp {
     private List<TierDtoReqWithSubscribed> tiers;
 
     private  boolean alreadyRequested;
+
+    private int likes;
 
 }

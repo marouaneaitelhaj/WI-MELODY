@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import org.example.wimelody.audit.SpringSecurityAuditAwareImpl;
 import org.example.wimelody.dto.pack.PackDtoReq;
 import org.example.wimelody.dto.pack.PackDtoRsp;
-import org.example.wimelody.dto.tier.TierDtoReqWithSubscribed;
-import org.example.wimelody.dto.tier.TierPacksDtoRsp;
-import org.example.wimelody.dto.user.UserDtoRsp;
 import org.example.wimelody.entities.Pack;
 import org.example.wimelody.entities.Payment;
 import org.example.wimelody.entities.Tier;
 import org.example.wimelody.enums.Role;
 import org.example.wimelody.exceptions.NotFoundEx;
+import org.example.wimelody.repositories.LikeRepository;
 import org.example.wimelody.repositories.PackRepository;
 import org.example.wimelody.repositories.PaymentRepository;
 import org.example.wimelody.repositories.TierRepository;
@@ -20,7 +18,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +28,8 @@ public class PackServiceImpl implements PackService {
     private final PackRepository packRepository;
 
     private final PaymentRepository paymentRepository;
+
+    private final LikeRepository likeRepository;
 
     private final TierRepository tierRepository;
 
@@ -44,6 +43,7 @@ public class PackServiceImpl implements PackService {
         Pack pack = modelMapper.map(dtoMini, Pack.class);
         pack.setDate(LocalDateTime.now());
         pack.setTier(tier);
+        pack.setArtist(springSecurityAuditAware.getCurrentAuditor());
         pack = packRepository.save(pack);
         return modelMapper.map(pack, PackDtoRsp.class);
     }
@@ -55,6 +55,7 @@ public class PackServiceImpl implements PackService {
         Tier tier = tierRepository.findById(dtoMini.getTier_id()).orElseThrow(() -> new NotFoundEx("Tier not found"));
         pack.setTier(tier);
         pack.setId(f);
+        pack.setArtist(springSecurityAuditAware.getCurrentAuditor());
         pack.setDate(LocalDateTime.now());
         pack = packRepository.save(pack);
         return modelMapper.map(pack, PackDtoRsp.class);
@@ -62,8 +63,9 @@ public class PackServiceImpl implements PackService {
 
     @Override
     public Boolean delete(Long f) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Pack pack = packRepository.findById(f).orElseThrow(() -> new NotFoundEx("Pack not found"));
+        packRepository.delete(pack);
+        return true;
     }
 
     @Override
@@ -95,6 +97,8 @@ public class PackServiceImpl implements PackService {
     public List<PackDtoRsp> findAllByArtist(UUID id) {
         List<Payment> payments = paymentRepository.findAllByFanIdAndTierArtistId(springSecurityAuditAware.getCurrentAuditor().getId(), id);
         List<Tier> tiers = payments.stream().map(Payment::getTier).toList();
-        return tiers.stream().map(tier -> packRepository.findAllByTierId(tier.getId()).stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList()).toList().stream().flatMap(List::stream).toList();
+        List<PackDtoRsp> packDtoRsps = tiers.stream().map(tier -> packRepository.findAllByTierId(tier.getId()).stream().map(pack -> modelMapper.map(pack, PackDtoRsp.class)).toList()).toList().stream().flatMap(List::stream).toList();
+        packDtoRsps.forEach(packDtoRsp -> packDtoRsp.setLiked(likeRepository.existsByFanIdAndPackId(springSecurityAuditAware.getCurrentAuditor().getId(), packDtoRsp.getId())));
+        return packDtoRsps;
     }
 }

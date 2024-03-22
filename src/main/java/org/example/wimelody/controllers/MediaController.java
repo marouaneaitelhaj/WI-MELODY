@@ -51,7 +51,7 @@ public class MediaController  {
     }
 
     @GetMapping("/pack/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ARTIST')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ARTIST', 'ROLE_FAN')")
     public List<MediaDtoRsp> findAllByPack(@PathVariable Long id) {
         return mediaService.findAllByPack(id);
     }
