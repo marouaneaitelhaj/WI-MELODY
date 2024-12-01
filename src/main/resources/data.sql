@@ -1,3 +1,6 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
 DO $$
 DECLARE
 i INTEGER := 1;
